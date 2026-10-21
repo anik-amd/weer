@@ -4,6 +4,9 @@ export type Theme = "light" | "dark";
 
 const STORAGE_KEY = "weer-theme";
 
+/** The browser chrome should match the page, not fight it. */
+const CHROME = { light: "#e4e6e0", dark: "#121815" } as const;
+
 /** The theme in force right now, read from the document root. */
 const current = (): Theme =>
   document.documentElement.dataset.theme === "dark" ? "dark" : "light";
@@ -17,6 +20,9 @@ export function useTheme() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", CHROME[theme]);
     try {
       localStorage.setItem(STORAGE_KEY, theme);
     } catch {
