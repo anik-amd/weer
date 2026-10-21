@@ -79,7 +79,7 @@ export function ProductPage() {
                         style={{
                           background: cw.hex,
                           boxShadow: isOn
-                            ? "inset 0 0 0 1px rgb(20 32 28 / 0.25), 0 0 0 2px var(--color-paper), 0 0 0 4px var(--color-ink)"
+                            ? "inset 0 0 0 1px rgb(20 32 28 / 0.25), 0 0 0 2px var(--color-ground), 0 0 0 4px var(--color-ink)"
                             : "inset 0 0 0 1px rgb(20 32 28 / 0.2)",
                         }}
                       />
@@ -113,10 +113,10 @@ export function ProductPage() {
                       aria-pressed={isOn}
                       className={`min-w-[3.25rem] border px-3 py-2.5 t-small transition-colors duration-150 ${
                         out
-                          ? "cursor-not-allowed border-paper-3 text-ink-3 line-through"
+                          ? "cursor-not-allowed border-ground-3 text-ink-3 line-through"
                           : isOn
-                            ? "border-ink bg-ink text-paper"
-                            : "border-paper-4 hover:border-ink"
+                            ? "border-solid bg-solid text-solid-ink"
+                            : "border-line hover:border-solid"
                       }`}
                     >
                       {s.size}
@@ -138,7 +138,7 @@ export function ProductPage() {
                 type="button"
                 disabled={soldOut}
                 onClick={() => add(product.id, active, selectedSize)}
-                className="btn btn--accent disabled:cursor-not-allowed disabled:bg-paper-3 disabled:text-ink-3"
+                className="btn btn--accent disabled:cursor-not-allowed disabled:bg-ground-3 disabled:text-ink-3"
               >
                 {soldOut
                   ? "Sold out in this size"
@@ -167,7 +167,7 @@ export function ProductPage() {
                 {batchIds.map((b, i) => (
                   <li
                     key={i}
-                    className="flex items-center gap-2 border border-paper-4 px-3 py-1.5 t-body"
+                    className="flex items-center gap-2 border border-line px-3 py-1.5 t-body"
                   >
                     <span
                       className="h-3.5 w-3.5 rounded-full"
@@ -298,7 +298,7 @@ export function ProductPage() {
       </div>
 
       {/* the fixed half */}
-      <div className="stage stage--short flex flex-col bg-paper-2">
+      <div className="stage stage--short flex flex-col bg-ground-2">
         <div className="flex min-h-0 flex-1 items-center justify-center p-6">
           <Garment
             kind={product.kind}
@@ -307,7 +307,7 @@ export function ProductPage() {
             className="h-full max-h-[44rem] w-auto"
           />
         </div>
-        <div className="hidden items-center justify-between gap-4 bg-paper px-5 py-3 min-[901px]:flex">
+        <div className="hidden items-center justify-between gap-4 bg-panel px-5 py-3 min-[901px]:flex">
           <span className="meta">{product.name}</span>
           <span className="meta">
             {distinct > 1 ? `Marled, ${distinct} batches` : "Solid batch"}

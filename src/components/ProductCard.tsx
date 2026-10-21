@@ -83,7 +83,7 @@ export function ProductCard({
               style={{
                 background: cw.hex,
                 boxShadow: isActive
-                  ? "inset 0 0 0 1px rgb(20 32 28 / 0.25), 0 0 0 2px var(--color-paper), 0 0 0 3px var(--color-ink)"
+                  ? "inset 0 0 0 1px rgb(20 32 28 / 0.25), 0 0 0 2px var(--color-ground), 0 0 0 3px var(--color-ink)"
                   : "inset 0 0 0 1px rgb(20 32 28 / 0.2)",
               }}
             />

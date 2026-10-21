@@ -36,7 +36,7 @@ export function Photo({
         decoding="async"
       />
       {(caption || (showCredit && credit)) && (
-        <figcaption className="absolute bottom-0 left-0 right-0 flex flex-col gap-0.5 p-3 t-small leading-tight text-paper/90">
+        <figcaption className="absolute bottom-0 left-0 right-0 flex flex-col gap-0.5 p-3 t-small leading-tight text-band-ink/90">
           {caption && <span>{caption}</span>}
           {showCredit && credit && (
             <span className="opacity-70">{credit}</span>

@@ -114,10 +114,10 @@ export function Checkout() {
                           </p>
                         </div>
                         <div className="mt-auto flex items-center gap-4 pt-4">
-                          <div className="flex items-center border border-paper-4">
+                          <div className="flex items-center border border-line">
                             <button
                               type="button"
-                              className="px-3 py-1.5 leading-none hover:bg-paper-2"
+                              className="px-3 py-1.5 leading-none hover:bg-ground-2"
                               aria-label={`Fewer ${product.name}`}
                               onClick={() => setQty(line.key, line.qty - 1)}
                             >
@@ -128,7 +128,7 @@ export function Checkout() {
                             </span>
                             <button
                               type="button"
-                              className="px-3 py-1.5 leading-none hover:bg-paper-2"
+                              className="px-3 py-1.5 leading-none hover:bg-ground-2"
                               aria-label={`More ${product.name}`}
                               onClick={() => setQty(line.key, line.qty + 1)}
                             >
@@ -240,33 +240,33 @@ export function Checkout() {
           {/* the summary */}
           <Reveal delay={160}>
             <aside className="field-dark h-fit p-6 lg:sticky lg:top-[calc(var(--header-h)+2rem)]">
-              <h2 className="t-lead font-semibold text-paper">Summary</h2>
+              <h2 className="t-lead font-semibold text-band-ink">Summary</h2>
               <dl className="mt-5 space-y-3">
                 <div className="flex items-baseline justify-between">
-                  <dt className="meta text-paper/70">Subtotal</dt>
-                  <dd className="num t-body text-paper">{euro(subtotal)}</dd>
+                  <dt className="meta text-band-ink/70">Subtotal</dt>
+                  <dd className="num t-body text-band-ink">{euro(subtotal)}</dd>
                 </div>
                 <div className="flex items-baseline justify-between">
-                  <dt className="meta text-paper/70">Shipping</dt>
-                  <dd className="num t-body text-paper">
+                  <dt className="meta text-band-ink/70">Shipping</dt>
+                  <dd className="num t-body text-band-ink">
                     {shipping === 0 ? "Free" : euro(shipping)}
                   </dd>
                 </div>
                 <div className="flex items-baseline justify-between pt-3">
-                  <dt className="t-lead font-semibold text-paper">Total</dt>
-                  <dd className="num t-lead font-bold text-paper">
+                  <dt className="t-lead font-semibold text-band-ink">Total</dt>
+                  <dd className="num t-lead font-bold text-band-ink">
                     {euro(total)}
                   </dd>
                 </div>
               </dl>
-              <p className="t-body mt-5 text-paper/90">
+              <p className="t-body mt-5 text-band-ink/90">
                 Free shipping over 75 euro. We ship within two working days and
                 cover returns for thirty.
               </p>
               <button
                 type="button"
                 onClick={clear}
-                className="meta mt-6 text-paper/70 link-line"
+                className="meta mt-6 text-band-ink/70 link-line"
               >
                 Empty the bag
               </button>

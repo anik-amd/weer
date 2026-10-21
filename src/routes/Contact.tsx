@@ -15,14 +15,16 @@ export function Contact() {
     <div className="split">
       <div>
         {/* ---------------------- hero ---------------------- */}
-        <section id="hero" className="read">
-          <h1 className="t-display">Write to us, or come by.</h1>
-          <Reveal delay={90}>
-            <p className="t-lead body-copy mt-7">
-              We answer everything within two working days, and we answer it
-              ourselves.
-            </p>
-          </Reveal>
+        <section id="hero" className="read read--lead">
+          <div>
+            <h1 className="t-display">Write to us, or come by.</h1>
+            <Reveal delay={90}>
+              <p className="t-lead body-copy mt-7">
+                We answer everything within two working days, and we answer it
+                ourselves.
+              </p>
+            </Reveal>
+          </div>
           <Reveal delay={150}>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
               <a href="#form" className="btn btn--accent">

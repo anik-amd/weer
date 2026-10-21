@@ -31,16 +31,26 @@ Pick four dye batches and the garment re-knits: the first slot sets the body,
 the other three become the marl in the fabric. All four the same gives you a
 solid shirt, which is exactly how a real reclaimed yarn behaves.
 
+On a phone the same builder moves under the headline, with the garment drawn
+full width, so the fold carries the sentence first and the thing you can play
+with second.
+
 ## Design
 
 - **Direction** — the split stage: one fixed half that holds the product or a
   photograph, one scrolling half that holds the reading. The fixed half
-  crossfades as the reader reaches a new section.
+  crossfades as the reader reaches a new section. The two columns end on the
+  same line, so the fold is one clean horizontal edge.
 - **Type** — Archivo (variable width and weight) only. Five sizes, no more.
 - **Colour** — a cool recycled-paper ground (`#e4e6e0`), deep pine ink
   (`#14201c`) and one accent, the marigold of a sorting bucket (`#e09b23`).
   Every photograph is treated the same way: warm monochrome. The garments are
   the only colour on the site.
+- **Light and dark** — the site ships both, and the toggle in the header
+  remembers your choice. The palette is written as *roles* rather than
+  colours, so the same set of classes works in either theme: the ground, the
+  bands, the stock, the plates and the ink all step together. The marigold
+  and the photographic treatment are the same in both.
 - **Product imagery** — every garment is drawn in code as a parametric SVG
   (`src/components/Garment.tsx`): the silhouette, the marled flecks of the
   four source dye batches, the collar, the seams and the screen-printed mark.

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useCart } from "../lib/cart";
+import { useTheme } from "../lib/theme";
 
 const LINKS = [
   { to: "/shop", label: "Shop" },
@@ -12,11 +13,12 @@ export function Header() {
   const { count, openCart } = useCart();
   const [menu, setMenu] = useState(false);
   const { pathname } = useLocation();
+  const { theme, toggle } = useTheme();
 
   useEffect(() => setMenu(false), [pathname]);
 
   return (
-    <header className="sticky top-0 z-40 h-[var(--header-h)] w-full bg-paper">
+    <header className="sticky top-0 z-40 h-[var(--header-h)] w-full bg-ground">
       <div className="frame flex h-full items-center justify-between gap-4">
         <Link
           to="/"
@@ -45,6 +47,16 @@ export function Header() {
         <div className="flex items-center gap-3">
           <button
             type="button"
+            onClick={toggle}
+            className="link-line t-small font-medium"
+            aria-label={
+              theme === "dark" ? "Use the light theme" : "Use the dark theme"
+            }
+          >
+            {theme === "dark" ? "Light" : "Dark"}
+          </button>
+          <button
+            type="button"
             onClick={openCart}
             className="link-line t-small font-medium"
           >
@@ -65,7 +77,7 @@ export function Header() {
       {menu && (
         <nav
           id="mobile-menu"
-          className="frame bg-paper-2 py-3 md:hidden"
+          className="frame bg-ground-2 py-3 md:hidden"
           aria-label="Main"
         >
           {LINKS.map((l) => (

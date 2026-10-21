@@ -30,7 +30,7 @@ export function CartDrawer() {
             type="button"
             aria-label="Close the bag"
             onClick={closeCart}
-            className="absolute inset-0 h-full w-full cursor-default bg-field/45"
+            className="absolute inset-0 h-full w-full cursor-default bg-scrim/45"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -41,7 +41,7 @@ export function CartDrawer() {
             role="dialog"
             aria-modal="true"
             aria-label="Your bag"
-            className="absolute inset-y-0 right-0 flex w-full max-w-[30rem] flex-col bg-paper"
+            className="absolute inset-y-0 right-0 flex w-full max-w-[30rem] flex-col bg-panel"
             initial={reduce ? { opacity: 0 } : { x: "100%" }}
             animate={reduce ? { opacity: 1 } : { x: 0 }}
             exit={reduce ? { opacity: 0 } : { x: "100%" }}
@@ -110,10 +110,10 @@ export function CartDrawer() {
                           {cw?.name ?? line.colourway} · {line.size}
                         </p>
                         <div className="mt-auto flex items-center justify-between pt-3">
-                          <div className="flex items-center border border-paper-4">
+                          <div className="flex items-center border border-line">
                             <button
                               type="button"
-                              className="px-3 py-1.5 leading-none hover:bg-paper-2"
+                              className="px-3 py-1.5 leading-none hover:bg-ground-2"
                               aria-label={`Fewer ${product.name}`}
                               onClick={() => setQty(line.key, line.qty - 1)}
                             >
@@ -124,7 +124,7 @@ export function CartDrawer() {
                             </span>
                             <button
                               type="button"
-                              className="px-3 py-1.5 leading-none hover:bg-paper-2"
+                              className="px-3 py-1.5 leading-none hover:bg-ground-2"
                               aria-label={`More ${product.name}`}
                               onClick={() => setQty(line.key, line.qty + 1)}
                             >
@@ -147,7 +147,7 @@ export function CartDrawer() {
             )}
 
             {lines.length > 0 && (
-              <div className="bg-paper-2 px-6 py-5">
+              <div className="bg-panel-2 px-6 py-5">
                 <div className="flex items-baseline justify-between">
                   <span className="t-small font-semibold">Subtotal</span>
                   <span className="num t-lead font-bold">

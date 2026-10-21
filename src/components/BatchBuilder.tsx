@@ -14,7 +14,7 @@ export function BatchBuilder({
   const active = DYE_BATCHES.find((b) => b.colourway === current) ?? DYE_BATCHES[0];
 
   return (
-    <div className="bg-paper px-5 py-5">
+    <div className="bg-panel px-5 py-5">
       <p className="t-body font-semibold tracking-[-0.01em]">
         Pick a dye batch
         <span className="mt-0.5 block font-normal text-ink-2">
@@ -33,8 +33,8 @@ export function BatchBuilder({
               aria-pressed={on}
               className={`flex items-center gap-2 border px-3 py-2.5 t-small transition-colors duration-150 ${
                 on
-                  ? "border-ink bg-ink text-paper"
-                  : "border-paper-4 text-ink hover:border-ink"
+                  ? "border-solid bg-solid text-solid-ink"
+                  : "border-line text-ink hover:border-solid"
               }`}
             >
               <span

@@ -33,14 +33,16 @@ export function Home() {
     <div className="split">
       {/* ---------------- reading column ---------------- */}
       <div>
-        <section id="hero" className="read">
-          <h1 className="t-display">Four old shirts. One new one.</h1>
-          <Reveal delay={80}>
-            <p className="t-lead body-copy mt-7">
-              We make t-shirts out of the t-shirts you already own. Collected
-              in Rotterdam, spun into yarn, knitted in Portugal.
-            </p>
-          </Reveal>
+        <section id="hero" className="read read--lead">
+          <div>
+            <h1 className="t-display">Four old shirts. One new one.</h1>
+            <Reveal delay={80}>
+              <p className="t-lead body-copy mt-7">
+                We make t-shirts out of the t-shirts you already own. Collected
+                in Rotterdam, spun into yarn, knitted in Portugal.
+              </p>
+            </Reveal>
+          </div>
           <Reveal delay={150}>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Link to="/shop" className="btn btn--accent">
@@ -53,15 +55,43 @@ export function Home() {
           </Reveal>
         </section>
 
+        {/* ------------- the live thing, on a phone ------------- */}
+        <section id="make" className="read min-[901px]:hidden">
+          <Reveal>
+            <h2 className="t-head max-w-[16ch]">Make it yours</h2>
+          </Reveal>
+          <Reveal delay={80}>
+            <p className="body-copy mt-5">
+              Four old shirts go in. Change the dye and the shirt below is
+              re-spun in front of you.
+            </p>
+          </Reveal>
+          <Reveal delay={140}>
+            <div className="mt-8 aspect-[4/5] w-full bg-plate p-6">
+              <Garment
+                kind={batch.product.kind}
+                colours={batch.hexes}
+                print={batch.product.print}
+                className="h-full w-full"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={190}>
+            <div className="mt-4">
+              <BatchBuilder current={dye} onPick={setDye} />
+            </div>
+          </Reveal>
+        </section>
+
         {/* ------------- the process, printed as a slip ------------- */}
         <section id="process" className="field-dark read bleed">
           <Reveal>
-            <h2 className="t-head max-w-[16ch] text-paper">
+            <h2 className="t-head max-w-[16ch] text-band-ink">
               How a shirt comes back
             </h2>
           </Reveal>
           <Reveal delay={80}>
-            <p className="body-copy mt-6 text-paper/90">
+            <p className="body-copy mt-6 text-band-ink/90">
               Nineteen days from the collection point to your door. The
               receipt below is the real one: four shirts in, one shirt out, and
               nothing new bought in.
@@ -86,7 +116,7 @@ export function Home() {
                   </div>
                 </div>
               ))}
-              <p className="num -mx-5 bg-ink px-5 py-3 t-small font-semibold text-paper">
+              <p className="num -mx-5 bg-solid px-5 py-3 t-small font-semibold text-solid-ink">
                 {PROCESS_RESULT}
               </p>
             </div>
@@ -112,7 +142,7 @@ export function Home() {
                   <source src="/photos/mill-engine.webm" type="video/webm" />
                 </video>
               </div>
-              <figcaption className="mt-2 t-small text-paper/70">
+              <figcaption className="mt-2 t-small text-band-ink/70">
                 A ring mill engine at work, Ellenroad, Greater Manchester, 2023.
                 Ridiculopathy, CC0, via Wikimedia Commons.
               </figcaption>
@@ -165,7 +195,7 @@ export function Home() {
                 <span className="num t-head leading-none font-extrabold tracking-[-0.04em]">
                   {FIGURES[0].figure}
                 </span>
-                <span className="mt-2 t-small leading-snug text-paper/80">
+                <span className="mt-2 t-small leading-snug text-band-ink/80">
                   {FIGURES[0].caption}
                 </span>
               </div>
@@ -179,7 +209,7 @@ export function Home() {
           </Reveal>
 
           <Reveal delay={120}>
-            <dl className="mt-6 grid grid-cols-1 gap-y-5 bg-paper-2 p-6 sm:grid-cols-2 sm:gap-x-10">
+            <dl className="mt-6 grid grid-cols-1 gap-y-5 bg-ground-2 p-6 sm:grid-cols-2 sm:gap-x-10">
               {FIGURES.slice(2).map((f) => (
                 <div key={f.figure} className="flex items-baseline gap-4">
                   <dt className="num t-lead shrink-0 font-bold tracking-[-0.03em]">
@@ -292,6 +322,7 @@ export function Home() {
       {/* ------------------- the fixed half ------------------- */}
       <Stage
         active={active}
+        className="max-[900px]:hidden"
         caption={
           <>
             <span className="meta">{BRAND.address}</span>

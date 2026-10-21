@@ -154,7 +154,7 @@ export function Shop() {
                     style={{
                       background: cw.hex,
                       boxShadow: isOn
-                        ? "inset 0 0 0 1px rgb(20 32 28 / 0.25), 0 0 0 2px var(--color-paper), 0 0 0 4px var(--color-ink)"
+                        ? "inset 0 0 0 1px rgb(20 32 28 / 0.25), 0 0 0 2px var(--color-ground), 0 0 0 4px var(--color-ink)"
                         : "inset 0 0 0 1px rgb(20 32 28 / 0.2)",
                     }}
                   />
@@ -180,7 +180,7 @@ export function Shop() {
             </select>
           </div>
 
-          <div id="takeback" className="mt-8 bg-paper-2 p-5">
+          <div id="takeback" className="mt-8 bg-ground-2 p-5">
             <p className="meta text-ink-2">Take-back</p>
             <p className="mt-2 t-body leading-snug">
               Post us two shirts in any condition and get twenty percent off
@@ -287,7 +287,7 @@ function FilterChip({
       onClick={onClick}
       aria-pressed={active}
       className={`rounded-full px-3 py-1.5 t-small transition-colors duration-150 ${
-        active ? "bg-ink text-paper" : "bg-paper-2 text-ink hover:bg-paper-3"
+        active ? "bg-solid text-solid-ink" : "bg-ground-2 text-ink hover:bg-ground-3"
       }`}
     >
       {label}

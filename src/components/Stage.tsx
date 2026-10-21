@@ -11,16 +11,18 @@ export function Stage({
   active,
   caption,
   aside,
+  className = "",
 }: {
   children: ReactNode;
   active: string;
   caption?: ReactNode;
   aside?: ReactNode;
+  className?: string;
 }) {
   const reduce = useReducedMotion();
 
   return (
-    <div className="stage flex flex-col bg-paper-2">
+    <div className={`stage flex flex-col bg-ground-2 ${className}`}>
       <div className="relative min-h-0 flex-1 overflow-hidden">
         <AnimatePresence initial={false}>
           <motion.div
@@ -39,7 +41,7 @@ export function Stage({
       {aside}
 
       {caption && (
-        <div className="hidden items-center justify-between gap-4 bg-paper px-5 py-3 min-[901px]:flex">
+        <div className="hidden items-center justify-between gap-4 bg-panel px-5 py-3 min-[901px]:flex">
           {caption}
         </div>
       )}

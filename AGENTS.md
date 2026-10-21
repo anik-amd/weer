@@ -39,6 +39,7 @@ src/
   data/products.ts      the seven pieces, colourways, sizes, print marks
   data/site.ts          brand details, process, figures, team, faq, credits
   lib/cart.tsx          cart context, reducer, localStorage
+  lib/theme.ts          the light/dark hook (localStorage key `weer-theme`)
   components/
     Garment.tsx         the parametric SVG garment (the heart of the site)
     Stage.tsx           the fixed half + the crossfade + useActiveSection
@@ -50,6 +51,36 @@ src/
     Home.tsx Shop.tsx ProductPage.tsx About.tsx Contact.tsx Checkout.tsx
 public/photos/          the found photographs and the two clips
 ```
+
+## Light and dark
+
+The site ships both. The theme is set on `<html data-theme="light|dark">`:
+`index.html` runs a small script before the first paint (so the page never
+flashes), and `src/lib/theme.ts` owns the state. The key in `localStorage` is
+`weer-theme`; with no stored value the page follows `prefers-color-scheme`.
+The two must stay in sync.
+
+**The palette is roles, not colours.** `src/index.css` has two layers:
+
+- `--color-*` (in `@theme inline`) are the Tailwind-facing names. They are
+  aliases, never raw values.
+- `--c-*` (in `:root` and `:root[data-theme="dark"]`) are the actual values.
+
+A token names a *job* — `ground`, `ground-2`, `ground-3`, `line`, `ink`,
+`ink-2`, `ink-3`, `band`, `band-ink`, `stock`, `stock-ink`, `stock-ink-2`,
+`hairline`, `solid`, `solid-ink`, `panel`, `panel-2`, `plate`, `accent`,
+`accent-2`, `accent-ink`, `scrim`. If you need a new colour, add a role, not
+a pigment. Never write a hex value into a component.
+
+Two tokens are deliberately **not** themed: `--c-wash` (the multiply over
+every photograph, so the treatment is identical in both themes) and
+`--c-accent` (the marigold stays marigold).
+
+The dark theme steps everything down so nothing glares: the ground, the
+plates and the stock all darken, and the ink lifts. Every ink step must
+still clear 7:1 against its own ground. `--c-plate` is the surface a garment
+drawing sits on; in the dark it is a mid grey, not a pale square, so a grid
+of products does not glare.
 
 ## The rules that hold this design together
 
@@ -66,10 +97,13 @@ public/photos/          the found photographs and the two clips
    labels, no index numbers (`01 / 02 / 03`).**
 6. **Every photograph gets the same treatment.** The `.photo` class does it:
    grayscale, sepia, contrast, paper multiplied over. Do not add a second
-   grade.
+   grade. The wash is `--c-wash` and does not change between themes.
 7. **The garments are the only colour on the site.** They are drawn in
    `Garment.tsx` from the batch colours, so they re-tint with the data.
 8. **One h1 per page, in the first screen, two lines or fewer.**
+9. **The two columns of a split end on one line.** The first block of the
+   reading column carries `read--lead`, which gives it the same height as
+   the fixed half beside it, so the fold is a single horizontal edge.
 
 ## The garment drawing
 
@@ -87,6 +121,12 @@ colours (which become the base tone and the marled flecks) and a `print` mark.
   once; it is why `mean` is computed as hex.
 - New silhouettes: add the paths to `shapesFor`, add a frame to `frameFor`,
   and add the kind to the `GarmentKind` union in `src/data/products.ts`.
+- The rugby (`kind === "rugby"`) is special: it is knitted in two solid
+  yarns, so it has no marl flecks, its base is the first batch, and it
+  carries horizontal `bands` in the contrast yarn. One wide band crosses
+  the chest so the number can be picked out of it in the body yarn
+  (`PrintMark` with `bare`). The bands are clipped to the garment, so the
+  tile never bands.
 
 ## Changing the content
 
@@ -127,6 +167,11 @@ headline line counts, contrast, the type scale, the picture floor, the frame
 margins, motion and the rest. **Target: 0 FAIL.** The single allowed waiver
 is `--allow font-not-dealt`, because the type face was deliberately redrawn
 from the dealt one; the reason is written up in `REPORT.md`.
+
+The gate reads the theme from the browser, so check **both** themes: it
+follows `prefers-color-scheme` when `localStorage` has no `weer-theme`. A
+contrast failure in the dark theme is usually an ink step that was not
+lifted to match the darker ground.
 
 If you need real pictures, search the open collections with the assets
 script rather than reaching for a stock photo, and add the credit to

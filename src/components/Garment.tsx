@@ -148,7 +148,8 @@ export function Garment({
   const distinct = new Set(batch.map((c) => c.toLowerCase()));
 
   // Base tone: the first dye batch, pulled a little toward the mean of the
-  // batch so a four-colour batch reads as marl rather than stripes.
+  // batch so a four-colour batch reads as marl rather than stripes. Rugby is
+  // two solid yarns, so it keeps its body colour.
   const mean = useMemo(() => {
     const acc = batch.map(toRgb);
     const n = acc.length;
@@ -159,7 +160,8 @@ export function Garment({
     );
   }, [batch.join(",")]);
 
-  const base = mix(batch[0], mean, distinct.size > 1 ? 0.38 : 0);
+  const base =
+    kind === "rugby" ? batch[0] : mix(batch[0], mean, distinct.size > 1 ? 0.38 : 0);
   const isDark = luminance(base) < 0.4;
   const inkForPrint = printColour ?? (isDark ? "#f0ede3" : "#16201d");
 
@@ -167,13 +169,15 @@ export function Garment({
   const stitch = isDark ? "rgba(238,234,222,0.34)" : "rgba(20,32,28,0.24)";
   const collarTone = mix(base, isDark ? "#ffffff" : "#000000", 0.14);
 
-  /* Flecks: the marl you see in a yarn spun from more than one dye batch. */
+  /* Flecks: the marl you see in a yarn spun from more than one dye batch.
+     Rugby is knitted in two solid yarns, so it has no marl. */
   const flecks = useMemo(() => {
+    if (kind === "rugby") return [];
     const rand = mulberry(9137);
     const out: { x: number; y: number; w: number; h: number; r: number; c: string }[] = [];
     const count = distinct.size > 1 ? 420 : 110;
     const bottom =
-      kind === "raglan" || kind === "rugby"
+      kind === "raglan"
         ? 790
         : kind === "crop" || kind === "cap"
           ? 480
@@ -190,24 +194,25 @@ export function Garment({
   }, [batch.join(","), distinct.size, kind]);
 
   const clipId = `clip-${uid}`;
-  const panelId = `panel-${uid}`;
   const isLong = kind === "raglan" || kind === "rugby";
 
-  const stripes = useMemo(() => {
+  const chest = kind === "crop" ? 225 : isLong ? 265 : 250;
+
+  /**
+   * Rugby: narrow horizontal bands knitted into the body, in the contrast
+   * yarn. The body colour dominates, the bands are thin and well spaced, and
+   * one wider band crosses the chest so the number has somewhere to sit.
+   * They are clipped to the garment, so the tile never bands.
+   */
+  const bands = useMemo(() => {
     if (kind !== "rugby") return [];
-    const rows: { y: number; h: number }[] = [];
-    let y = 96;
-    let i = 0;
-    while (y < 800) {
-      const h = i % 2 === 0 ? 17 : 32;
-      rows.push({ y, h });
-      y += h;
-      i += 1;
+    const rows: { y: number; h: number }[] = [{ y: 138, h: 16 }];
+    rows.push({ y: 196, h: 112 });
+    for (let y = 340; y < 760; y += 132) {
+      rows.push({ y, h: 16 });
     }
     return rows;
   }, [kind]);
-
-  const chest = kind === "crop" ? 225 : isLong ? 265 : 250;
   const frame = frameFor(kind);
 
   return (
@@ -246,21 +251,6 @@ export function Garment({
           <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" />
           <feColorMatrix type="saturate" values="0" />
         </filter>
-
-        <mask id={panelId}>
-          <rect x="0" y="0" width="600" height="820" fill="black" />
-          {kind === "rugby" &&
-            stripes.map((s, i) => (
-              <rect
-                key={i}
-                x="0"
-                y={s.y}
-                width="600"
-                height={s.h}
-                fill={i % 2 === 0 ? "white" : "black"}
-              />
-            ))}
-        </mask>
       </defs>
 
       {/* Shadow under the garment */}
@@ -280,19 +270,27 @@ export function Garment({
           <path
             key={i}
             d={s.d}
-            fill={s.label === "brim" ? mix(base, isDark ? "#ffffff" : "#000000", 0.12) : base}
+            fill={
+              s.label === "brim"
+                ? mix(base, isDark ? "#ffffff" : "#000000", 0.12)
+                : base
+            }
           />
         ))}
 
-        {/* Knitted stripes, rugby only */}
+        {/* Knitted bands, rugby only, clipped to the garment */}
         {kind === "rugby" && (
-          <g mask={`url(#${panelId})`}>
-            <rect x="0" y="0" width="600" height="820" fill={batch[0]} />
-            {stripes.map((s, i) =>
-              i % 2 === 0 ? null : (
-                <rect key={i} x="0" y={s.y} width="600" height={s.h} fill={batch[1]} />
-              ),
-            )}
+          <g clipPath={`url(#${clipId})`}>
+            {bands.map((b, i) => (
+              <rect
+                key={i}
+                x="0"
+                y={b.y}
+                width="600"
+                height={b.h}
+                fill={batch[1]}
+              />
+            ))}
           </g>
         )}
 
@@ -421,7 +419,13 @@ export function Garment({
         {/* Print */}
         {kind !== "cap" && print !== "none" && (
           <g transform={`translate(300 ${chest})`}>
-            <PrintMark mark={print} colour={inkForPrint} tone={isDark ? "dark" : "light"} />
+            {kind === "rugby" ? (
+              // A number picked out of the wide chest band: the body yarn on
+              // the contrast yarn, so it reads wherever the band falls.
+              <PrintMark mark={print} colour={batch[0]} tone="light" bare />
+            ) : (
+              <PrintMark mark={print} colour={inkForPrint} tone={isDark ? "dark" : "light"} />
+            )}
           </g>
         )}
       </g>
@@ -429,7 +433,18 @@ export function Garment({
   );
 }
 
-function PrintMark({ mark, colour, tone }: { mark: PrintMark; colour: string; tone: "light" | "dark" }) {
+function PrintMark({
+  mark,
+  colour,
+  tone,
+  bare,
+}: {
+  mark: PrintMark;
+  colour: string;
+  tone: "light" | "dark";
+  /** Draw the numeral alone, for a shirt that already has a band under it. */
+  bare?: boolean;
+}) {
   if (mark === "four") {
     return (
       <g transform="translate(-70 -68) scale(1.18)" fill={colour}>
@@ -453,14 +468,25 @@ function PrintMark({ mark, colour, tone }: { mark: PrintMark; colour: string; to
   if (mark === "bar") {
     return (
       <g>
-        <rect
-          x="-88"
-          y="-26"
-          width="176"
-          height="52"
-          fill={tone === "dark" ? "rgba(240,237,227,0.22)" : "rgba(20,32,28,0.16)"}
-        />
-        <g transform="translate(-27 -36) scale(0.6)" fill={colour}>
+        {!bare && (
+          <rect
+            x="-88"
+            y="-26"
+            width="176"
+            height="52"
+            fill={
+              tone === "dark" ? "rgba(240,237,227,0.22)" : "rgba(20,32,28,0.16)"
+            }
+          />
+        )}
+        <g
+          transform={
+            bare
+              ? "translate(-50 -68) scale(0.92)"
+              : "translate(-27 -36) scale(0.6)"
+          }
+          fill={colour}
+        >
           <rect x="56" y="0" width="24" height="120" />
           <path d="M 56 0 L 56 66 L 0 66 Z" />
           <rect x="0" y="66" width="100" height="22" />

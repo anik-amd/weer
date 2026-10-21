@@ -1,33 +1,104 @@
 @import "tailwindcss";
 
 @theme {
-  /* Paper: the ground. Recycled board grey, cool enough to read as stone. */
-  --color-paper: #e4e6e0;
-  --color-paper-2: #d9dcd5;
-  --color-paper-3: #c9cdc4;
-  --color-paper-4: #b6bcb2;
-
-  /* Ink: deep pine black, never #000. */
-  --color-ink: #14201c;
-  --color-ink-2: #3c4944;
-  --color-ink-3: #3f4a44;
-
-  /* One accent: the sorting-bucket marigold. */
-  --color-accent: #e09b23;
-  --color-accent-2: #b8780f;
-
-  /* Field colours for full-width bands. */
-  --color-field: #0d1613;
-  --color-field-2: #1d2b26;
-  --color-field-ink: #e4e6e0;
-
   --font-sans: "Archivo", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   --radius-sheet: 0px;
 }
 
+/*
+  Roles, not colours. Each token names a job on the page; the values live in
+  :root and flip in the dark theme, so one set of classes works in both.
+  Nothing here is a raw pigment.
+*/
+@theme inline {
+  /* The ground, and the surfaces that step away from it. */
+  --color-ground: var(--c-ground);
+  --color-ground-2: var(--c-ground-2);
+  --color-ground-3: var(--c-ground-3);
+  --color-line: var(--c-line);
+
+  /* Ink on the ground. */
+  --color-ink: var(--c-ink);
+  --color-ink-2: var(--c-ink-2);
+  --color-ink-3: var(--c-ink-3);
+
+  /* A full-bleed band: the deep field a section changes into. */
+  --color-band: var(--c-band);
+  --color-band-ink: var(--c-band-ink);
+
+  /* Stock: a receipt, a letter sheet, a slip. Dim, never glaring. */
+  --color-stock: var(--c-stock);
+  --color-stock-ink: var(--c-stock-ink);
+  --color-stock-ink-2: var(--c-stock-ink-2);
+  --color-hairline: var(--c-hairline);
+
+  /* The solid fill: a button, a selected swatch, and its ink. */
+  --color-solid: var(--c-solid);
+  --color-solid-ink: var(--c-solid-ink);
+
+  /* A raised panel: the bag, the builder, a caption bar. */
+  --color-panel: var(--c-panel);
+  --color-panel-2: var(--c-panel-2);
+
+  /* The plate a garment drawing sits on. */
+  --color-plate: var(--c-plate);
+
+  /* One accent: the sorting-bucket marigold, and the ink that sits on it. */
+  --color-accent: var(--c-accent);
+  --color-accent-2: var(--c-accent-2);
+  --color-accent-ink: var(--c-accent-ink);
+
+  /* The scrim behind the bag. */
+  --color-scrim: var(--c-scrim);
+}
+
 @layer base {
   :root {
+    color-scheme: light;
+
+    /* Paper: the ground. Recycled board grey, cool enough to read as stone. */
+    --c-ground: #e4e6e0;
+    --c-ground-2: #d9dcd5;
+    --c-ground-3: #c9cdc4;
+    --c-line: #b6bcb2;
+
+    /* Ink: deep pine black, never #000. */
+    --c-ink: #14201c;
+    --c-ink-2: #3c4944;
+    --c-ink-3: #3f4a44;
+
+    /* The full-bleed band, and the pale ink that sits on it. */
+    --c-band: #0d1613;
+    --c-band-ink: #e4e6e0;
+
+    /* Stock: dim board, never a glaring white sheet. */
+    --c-stock: #9aa093;
+    --c-stock-ink: #0b100e;
+    --c-stock-ink-2: #1f2724;
+    --c-hairline: #6e766a;
+
+    /* The wash over every photograph. Constant: one treatment, both themes. */
+    --c-wash: #e4e6e0;
+
+    /* The solid fill and its ink. */
+    --c-solid: #14201c;
+    --c-solid-ink: #e4e6e0;
+
+    /* A raised panel, and a second step inside it. */
+    --c-panel: #e4e6e0;
+    --c-panel-2: #d9dcd5;
+
+    /* One accent: the sorting-bucket marigold. */
+    --c-accent: #e09b23;
+    --c-accent-2: #b8780f;
+    --c-accent-ink: #14201c;
+
+    /* The plate a garment drawing sits on. */
+    --c-plate: #d9dcd5;
+
+    --c-scrim: rgba(13, 22, 19, 0.45);
+
     --header-h: 4.5rem;
     --measure: 58ch;
     --frame: clamp(1.25rem, 4vw, 3.5rem);
@@ -41,14 +112,59 @@
     --step-small: 1rem;
   }
 
+  /*
+    The dark theme. The room goes dark, the paper stays dim board, and the
+    marigold stays marigold. Same five sizes, same one accent. Nothing on
+    the page is allowed to glare: the ground, the plates and the stock all
+    step down, so the only bright things are the ink and the accent.
+  */
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --c-ground: #121815;
+    --c-ground-2: #1b2320;
+    --c-ground-3: #242d29;
+    --c-line: #333d38;
+
+    --c-ink: #e8eae4;
+    --c-ink-2: #c2cac4;
+    --c-ink-3: #a3aca5;
+
+    --c-band: #080b0a;
+    --c-band-ink: #e4e6e0;
+
+    --c-stock: #333c36;
+    --c-stock-ink: #e4e6e0;
+    --c-stock-ink-2: #aab2ac;
+    --c-hairline: #59635b;
+
+    --c-wash: #e4e6e0;
+
+    --c-solid: #e8eae4;
+    --c-solid-ink: #121815;
+
+    --c-panel: #262e2a;
+    --c-panel-2: #303a35;
+
+    --c-accent: #e09b23;
+    --c-accent-2: #efb552;
+    --c-accent-ink: #14201c;
+
+    /* The plate a garment drawing sits on. Dimmer than the light plate, so a
+       grid of products does not glare in the dark. */
+    --c-plate: #656c60;
+
+    --c-scrim: rgba(0, 0, 0, 0.62);
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
 
   body {
-    background-color: var(--color-paper);
-    color: var(--color-ink);
+    background-color: var(--c-ground);
+    color: var(--c-ink);
     font-family: var(--font-sans);
     font-size: var(--step-body);
     line-height: 1.55;
@@ -83,13 +199,13 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent-2);
+    outline: 2px solid var(--c-accent-2);
     outline-offset: 3px;
   }
 
   ::selection {
-    background: var(--color-accent);
-    color: var(--color-ink);
+    background: var(--c-accent);
+    color: var(--c-accent-ink);
   }
 
   input,
@@ -191,6 +307,15 @@
     padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(3rem, 6vw, 5rem);
   }
 
+  /* The first block of the reading column is the same height as the fixed
+     half beside it, so the two columns end on one line instead of stepping.
+     The content stays together at the top; the space falls below it. */
+  @media (min-width: 901px) {
+    .read--lead {
+      min-height: calc(100svh - var(--header-h));
+    }
+  }
+
   /* A field of colour that runs off the edge of the page, so the text on it
      keeps a proper margin instead of sitting against its own edge. */
   .bleed {
@@ -250,8 +375,8 @@
     gap: 0.6rem;
     min-height: 2.875rem;
     padding: 0.6rem 1.35rem;
-    background: var(--color-ink);
-    color: var(--color-paper);
+    background: var(--c-solid);
+    color: var(--c-solid-ink);
     font-size: var(--step-small);
     font-weight: 600;
     letter-spacing: -0.005em;
@@ -266,8 +391,8 @@
   }
 
   .btn:hover {
-    background: var(--color-accent);
-    color: var(--color-ink);
+    background: var(--c-accent);
+    color: var(--c-accent-ink);
   }
 
   .btn:active {
@@ -275,33 +400,33 @@
   }
 
   .btn--accent {
-    background: var(--color-accent);
-    color: var(--color-ink);
+    background: var(--c-accent);
+    color: var(--c-accent-ink);
   }
 
   .btn--accent:hover {
-    background: var(--color-ink);
-    color: var(--color-paper);
+    background: var(--c-solid);
+    color: var(--c-solid-ink);
   }
 
   .btn--ghost {
-    background: var(--color-paper-2);
-    color: var(--color-ink);
+    background: var(--c-ground-2);
+    color: var(--c-ink);
   }
 
   .btn--ghost:hover {
-    background: var(--color-ink);
-    color: var(--color-paper);
+    background: var(--c-solid);
+    color: var(--c-solid-ink);
   }
 
   .btn--on-dark {
-    background: var(--color-paper);
-    color: var(--color-ink);
+    background: var(--c-stock);
+    color: var(--c-stock-ink);
   }
 
   .btn--on-dark:hover {
-    background: var(--color-accent);
-    color: var(--color-ink);
+    background: var(--c-accent);
+    color: var(--c-accent-ink);
   }
 
   .btn--block {
@@ -327,7 +452,7 @@
   .photo {
     position: relative;
     overflow: hidden;
-    background: var(--color-paper-3);
+    background: var(--c-ground-3);
   }
 
   .photo > img {
@@ -342,7 +467,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: var(--color-paper);
+    background: var(--c-wash);
     mix-blend-mode: multiply;
     opacity: 0.12;
     pointer-events: none;
@@ -350,8 +475,8 @@
 
   /* ---- The slip (process receipt) ---- */
   .slip {
-    background: var(--color-paper);
-    color: var(--color-ink);
+    background: var(--c-stock);
+    color: var(--c-stock-ink);
     clip-path: polygon(
       0 0,
       100% 0,
@@ -395,7 +520,7 @@
     flex: 1 1 auto;
     min-width: 1.5rem;
     height: 4px;
-    border-bottom: 2px dotted var(--color-paper-4);
+    border-bottom: 2px dotted var(--c-hairline);
     margin-inline: 0.35rem;
     transform: translateY(-0.22rem);
   }
@@ -416,13 +541,13 @@
   }
 
   .qa summary:hover .qa-q {
-    color: var(--color-accent-2);
+    color: var(--c-accent-2);
   }
 
   .qa-a {
     padding-bottom: 1.25rem;
     max-width: 42ch;
-    color: var(--color-ink-2);
+    color: var(--c-ink-2);
   }
 
   /* ---- Swatches ---- */
@@ -456,15 +581,14 @@
   }
 
   .field-dark {
-    background: var(--color-field);
-    color: var(--color-field-ink);
+    background: var(--c-band);
+    color: var(--c-band-ink);
   }
 
   .field-accent {
-    background: var(--color-accent);
-    color: var(--color-ink);
+    background: var(--c-accent);
+    color: var(--c-accent-ink);
   }
-
   /* A letter on a sheet with a scalloped bottom edge, and a tear-off strip. */
   .sheet {
     --notch: 11px;
@@ -484,7 +608,7 @@
     height: 12px;
     background-image: radial-gradient(
       circle at 6px 6px,
-      var(--color-paper) 2.6px,
+      var(--c-stock) 2.6px,
       transparent 2.8px
     );
     background-size: 12px 12px;
@@ -494,7 +618,7 @@
 
   /* ---- Product grid ---- */
   .tile-art {
-    background: var(--color-paper-2);
+    background: var(--c-plate);
     aspect-ratio: 4 / 5;
     display: grid;
     place-items: center;
@@ -535,9 +659,9 @@
   /* ---- Forms ---- */
   .field {
     width: 100%;
-    background: var(--color-paper);
+    background: var(--c-ground);
     border: 0;
-    border-bottom: 1px solid var(--color-paper-4);
+    border-bottom: 1px solid var(--c-line);
     padding: 0.6rem 0;
     font-size: var(--step-body);
     border-radius: 0;
@@ -546,11 +670,11 @@
 
   .field:focus {
     outline: none;
-    border-bottom-color: var(--color-ink);
+    border-bottom-color: var(--c-ink);
   }
 
   .field::placeholder {
-    color: var(--color-ink-3);
+    color: var(--c-ink-3);
   }
 
   select.field {

@@ -27,26 +27,28 @@ export function About() {
     <div className="split">
       <div>
         {/* ---------------------- hero ---------------------- */}
-        <section id="hero" className="read">
-          <h1 className="t-display">Nobody wanted them.</h1>
-          <Reveal delay={90}>
-            <p className="t-lead body-copy mt-7">
-              WEER started in 2021 in a warehouse on Keileweg, with a rented
-              shredder and a stack of t-shirts that nobody had bought.
-            </p>
-          </Reveal>
-          <Reveal delay={150}>
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Link to="/shop" className="btn btn--accent">
-                See the collection
-              </Link>
-              <a href="#letter" className="link-line t-small font-semibold">
-                Read the founder's letter
-              </a>
-            </div>
-          </Reveal>
+        <section id="hero" className="read read--lead">
+          <div>
+            <h1 className="t-display">Nobody wanted them.</h1>
+            <Reveal delay={90}>
+              <p className="t-lead body-copy mt-7">
+                WEER started in 2021 in a warehouse on Keileweg, with a rented
+                shredder and a stack of t-shirts that nobody had bought.
+              </p>
+            </Reveal>
+            <Reveal delay={150}>
+              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <Link to="/shop" className="btn btn--accent">
+                  See the collection
+                </Link>
+                <a href="#letter" className="link-line t-small font-semibold">
+                  Read the founder's letter
+                </a>
+              </div>
+            </Reveal>
+          </div>
           <Reveal delay={200}>
-            <p className="body-copy mt-5 text-ink-2">
+            <p className="body-copy mt-8 max-w-[52ch] text-ink-2">
               There are seven of us now, a spinning room, and one rule: we do
               not buy new fibre. Everything in this building arrived as a shirt
               somebody already owned. This page is the whole story, including
@@ -58,7 +60,7 @@ export function About() {
         {/* --------------------- the letter --------------------- */}
         <section id="letter" className="field-dark read bleed">
           <Reveal>
-            <div className="sheet mx-auto max-w-[40rem] bg-paper px-7 py-10 text-ink md:px-11 md:py-14">
+            <div className="sheet mx-auto max-w-[40rem] bg-stock px-7 py-10 text-stock-ink md:px-11 md:py-14">
               <div className="flex items-center gap-4">
                 <span
                   className="flex h-11 w-11 items-center justify-center rounded-full t-small font-bold"
@@ -71,7 +73,7 @@ export function About() {
                   <p className="t-small font-semibold">
                     {LETTER.signatory}
                   </p>
-                  <p className="meta text-ink-2">{LETTER.role}, WEER</p>
+                  <p className="meta text-stock-ink-2">{LETTER.role}, WEER</p>
                 </div>
               </div>
 
@@ -88,7 +90,7 @@ export function About() {
 
               <p className="mt-9 t-lead leading-snug italic">
                 {LETTER.signatory}
-                <span className="meta mt-1 block not-italic text-ink-2">
+                <span className="meta mt-1 block not-italic text-stock-ink-2">
                   {LETTER.role}
                 </span>
               </p>
@@ -97,12 +99,12 @@ export function About() {
             <div className="mx-auto max-w-[40rem]">
               <a
                 href={`mailto:${BRAND.email}`}
-                className="flex h-[4.5rem] items-center justify-between gap-4 bg-paper px-7 text-ink md:px-11"
+                className="flex h-[4.5rem] items-center justify-between gap-4 bg-stock px-7 text-stock-ink md:px-11"
               >
                 <span className="t-small font-semibold">
                   {BRAND.email}
                 </span>
-                <span className="meta text-ink-2">Write to us</span>
+                <span className="meta text-stock-ink-2">Write to us</span>
               </a>
             </div>
           </Reveal>
