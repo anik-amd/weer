@@ -13,11 +13,21 @@ invented. The copy, the art direction, the illustrations and the code were
 written and built by AI.
 
 **Keep that true.** The site states it in the footer, on the About page and
-in the page metadata. If you add a page, a section, a product or a claim,
-keep the fiction visible. Do not add fake customer reviews, star ratings,
-press logos, testimonials or invented partner logos — that is the one thing
-the site deliberately never does. The brand's own operational numbers are fine
-as fiction, provided they stay consistent with the rest of the site.
+in the page metadata, in small plain type rather than a banner. If you add a
+page, a section, a product or a claim, keep the fiction visible. Do not add
+fake customer reviews, star ratings, press logos, testimonials or invented
+partner logos — that is the one thing the site deliberately never does. The
+brand's own operational numbers are fine as fiction, provided they stay
+consistent with the rest of the site.
+
+## Deployment
+
+The site is live at <https://weer-studio.netlify.app> (Netlify, free tier).
+Pushing to `main` deploys it: `.github/workflows/deploy.yml` builds and calls
+the Netlify CLI with the `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` repository
+secrets. `netlify.toml` holds the build command, the publish directory, the
+cache headers and the SPA redirect; `public/_redirects` ships the same
+redirect rule inside the published folder. Never write a token into the tree.
 
 ## Stack and layout
 

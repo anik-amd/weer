@@ -28,3 +28,6 @@ dev.log
 dev.err.log
 .taste-skill/
 
+# netlify cli local state
+.netlify/
+

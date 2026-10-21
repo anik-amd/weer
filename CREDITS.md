@@ -7,7 +7,7 @@
 > The source code, copy and drawings elsewhere in this repository are MIT.
 
 Every photograph and video on this site was found in open collections. They
-show the world of reclaimed fibre, not the fictional WEER studio. The same
+show the world of reclaimed fibre, not the WEER studio. The same
 list appears in the site footer.
 
 | Work | Creator | Licence | Source |

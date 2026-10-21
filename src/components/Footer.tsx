@@ -72,26 +72,27 @@ export function Footer() {
           {BRAND.kvk}.
         </p>
 
-        <div className="mt-6 max-w-[46rem] border-l-2 border-accent pl-5">
-          <p className="t-body font-semibold text-paper">
-            WEER is not a real company, and nothing on this site is real.
-          </p>
-          <p className="mt-2 t-small leading-relaxed text-paper/75">
-            The brand, the products, the prices, the team, the address, the
-            phone number, the customer counts, the environmental figures and the
-            history are all invented for this demonstration. No orders are
-            taken, no payment is taken, and no message sent from this site
-            reaches a real person. The whole site — copy, design and code — was
-            written and built by AI.
-          </p>
-        </div>
+        <p className="meta mt-8 max-w-[46rem] leading-relaxed text-paper/75">
+          A design study, not a shop. The brand, the products, the prices, the
+          team, the address and the numbers are invented, and the copy, the art
+          and the code were written by AI. No orders are taken and no message
+          sent from here reaches a real person. The source is on{" "}
+          <a
+            className="link-line text-paper"
+            href="https://github.com/anik-amd/weer"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+          .
+        </p>
 
         <div className="mt-8 max-w-[42rem]">
           <p className="meta text-paper/80">
             Photographs and footage found in open collections, showing the world
-            of reclaimed fibre rather than our fictional studio. Every garment
-            on this site is a drawing made in code, not a photograph of a
-            product.
+            of reclaimed fibre rather than the studio. Every garment on this
+            site is a drawing made in code, not a photograph of a product.
           </p>
           <ul className="mt-3 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
             {CREDITS.map((c) => (

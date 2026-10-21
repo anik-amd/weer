@@ -158,11 +158,11 @@ Top three problems (most visible first), each with the screenshot it shows in an
 ```
 
 **What still falls short.** The scroll films are honest but the site has no
-photograph of the fictional studio, because no such studio exists; every
-picture shows the world of reclaimed fibre instead, and the site says so in
-the captions. The garments are drawings, so they are the one thing on the
-site that a reader cannot photograph. A real launch would need studio
-photography, a payment backend, and the stock figures behind each size.
+photograph of the studio, because no such studio exists; every picture shows
+the world of reclaimed fibre instead, and the site says so in the captions.
+The garments are drawings, so they are the one thing on the site that a reader
+cannot photograph. A real launch would need studio photography, a payment
+backend, and the stock figures behind each size.
 
 ---
 
@@ -193,8 +193,7 @@ against a 20px page margin.
 ## 6. Pictures and footage
 
 All found in open collections, all credited in the site footer and listed in
-`CREDITS.md`. They show the world of reclaimed fibre, never the fictional
-studio.
+`CREDITS.md`. They show the world of reclaimed fibre, never the studio.
 
 | Work | Creator | Licence | Where the credit sits |
 | --- | --- | --- | --- |
@@ -223,7 +222,20 @@ this subject's world. Real archive pictures were found instead.
 
 ---
 
-## 7. Before launch
+## 7. Deployment
+
+The site is published on Netlify (free tier) at
+<https://weer-studio.netlify.app>. The Netlify site id and a personal access
+token are stored as GitHub Actions secrets (`NETLIFY_SITE_ID`,
+`NETLIFY_AUTH_TOKEN`); `.github/workflows/deploy.yml` builds and deploys on
+every push to `main`. `netlify.toml` carries the build command, the publish
+directory, the cache headers and the SPA rewrite, and `public/_redirects`
+ships the same rewrite inside the published folder, so deep routes such as
+`/shop/cirrus` and the not-found page resolve to the client router.
+
+---
+
+## 8. Before launch
 
 - The brand, the people, the address, the figures and the whole supply chain
   are invented for this build.

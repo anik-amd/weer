@@ -1,16 +1,6 @@
 # WEER
 
-> **This website is fiction.**
-> WEER is not a real company. The brand, the products, the prices, the team,
-> the address, the phone number, the customer counts, the environmental
-> figures and the history are all invented. Every garment on the site is a
-> drawing made in code, not a photograph of a real product. No order is taken
-> and no payment is processed.
->
-> **The whole thing was written and built by AI** — the copy, the art
-> direction, the illustrations and the code — with a small toolkit of open
-> skills used to draw the design direction, check it against a real browser and
-> find the real photographs.
+[![Live preview](https://img.shields.io/badge/live-weer--studio.netlify.app-2c7a5f?style=flat-square)](https://weer-studio.netlify.app)
 
 A fictional e-commerce site for a Rotterdam studio that makes t-shirts out of
 the t-shirts you already own. **WEER** is Dutch for *again*.
@@ -18,6 +8,12 @@ the t-shirts you already own. **WEER** is Dutch for *again*.
 Four reclaimed t-shirts are shredded, spun into yarn and knitted into one new
 body. Every page describes the same company, so the shop, the story and the
 numbers all agree with each other.
+
+The brand, the products, the prices, the team, the address, the customer
+counts, the environmental figures and the history are all invented, and every
+garment is a drawing made in code rather than a photograph. The copy, the art
+direction and the code were written by AI. No order is taken and no payment
+is processed.
 
 | Route | What it is |
 | --- | --- |
@@ -61,6 +57,13 @@ npm run lint     # oxlint
 
 Node 20+ recommended (Node 22 used here).
 
+## Deploying
+
+The site is deployed on Netlify: <https://weer-studio.netlify.app>. Push to
+`main` and the GitHub Actions workflow in `.github/workflows/deploy.yml` builds
+and publishes it. The Netlify token and site id live as repository secrets
+(`NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`), never in the tree.
+
 ## Stack
 
 Vite · React 19 · TypeScript · Tailwind CSS v4 · React Router · Motion
@@ -80,7 +83,7 @@ credited on the page and in the footer:
 - *Ellenroad Ring Mill Engine in operation*, 2023 — Ridiculopathy, CC0
 - *Room of steam powered looms*, 2013 — Victuallers, CC BY-SA 3.0
 
-They show the world of reclaimed fibre, not the fictional studio. They are
+They show the world of reclaimed fibre, not the studio. They are
 **not** covered by this repository's MIT licence; see `CREDITS.md` for each
 file's own terms.
 

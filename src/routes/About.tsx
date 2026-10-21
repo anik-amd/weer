@@ -254,10 +254,18 @@ export function About() {
           </Reveal>
           <Reveal delay={140}>
             <p className="meta mt-9 max-w-[46ch] text-ink-2">
-              One last thing, and the only sentence on this site that is not
-              part of the story: WEER is not a real company. Every name, figure,
-              address, review and photograph of the studio is invented, and the
-              whole site was written and built by AI.
+              One note outside the story: WEER is not a real company. Every
+              name, figure and address on this site is invented, and the site
+              was written and built by AI. The source is on{" "}
+              <a
+                className="link-line"
+                href="https://github.com/anik-amd/weer"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub
+              </a>
+              .
             </p>
           </Reveal>
         </section>
