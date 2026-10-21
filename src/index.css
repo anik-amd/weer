@@ -1,0 +1,591 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paper: the ground. Recycled board grey, cool enough to read as stone. */
+  --color-paper: #e4e6e0;
+  --color-paper-2: #d9dcd5;
+  --color-paper-3: #c9cdc4;
+  --color-paper-4: #b6bcb2;
+
+  /* Ink: deep pine black, never #000. */
+  --color-ink: #14201c;
+  --color-ink-2: #3c4944;
+  --color-ink-3: #55605a;
+
+  /* One accent: the sorting-bucket marigold. */
+  --color-accent: #e09b23;
+  --color-accent-2: #b8780f;
+
+  /* Field colours for full-width bands. */
+  --color-field: #0d1613;
+  --color-field-2: #1d2b26;
+  --color-field-ink: #e4e6e0;
+
+  --font-sans: "Archivo", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --radius-sheet: 0px;
+}
+
+@layer base {
+  :root {
+    --header-h: 4.5rem;
+    --measure: 58ch;
+
+    /* Five sizes, and only five. */
+    --step-display: clamp(2.75rem, 1rem + 5.4vw, 5rem);
+    --step-head: clamp(1.75rem, 1.05rem + 2.4vw, 3.125rem);
+    --step-lead: clamp(1.3125rem, 1.2rem + 0.4vw, 1.5625rem);
+    --step-body: clamp(1.1875rem, 1.15rem + 0.14vw, 1.25rem);
+    --step-small: 1rem;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--step-body);
+    line-height: 1.55;
+    font-variation-settings: "wdth" 100;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-variation-settings: "wdth" 108;
+    font-weight: 700;
+    letter-spacing: -0.028em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+
+  h3,
+  h4 {
+    line-height: 1.25;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-underline-offset: 0.22em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-2);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+@layer components {
+  /* ---- Type roles: five sizes ---- */
+  .body-copy {
+    font-size: var(--step-body);
+    line-height: 1.6;
+    max-width: var(--measure);
+  }
+
+  .t-display,
+  .display {
+    font-size: var(--step-display);
+    font-variation-settings: "wdth" 112;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.94;
+  }
+
+  .t-head,
+  .head {
+    font-size: var(--step-head);
+    font-variation-settings: "wdth" 108;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+  }
+
+  .t-lead,
+  .lead {
+    font-size: var(--step-lead);
+    line-height: 1.36;
+    font-weight: 400;
+    letter-spacing: -0.012em;
+  }
+
+  .t-body,
+  .body {
+    font-size: var(--step-body);
+  }
+
+  .t-small {
+    font-size: var(--step-small);
+    font-variant-numeric: tabular-nums;
+    font-variation-settings: "wdth" 97;
+  }
+
+  .meta {
+    font-size: var(--step-small);
+    line-height: 1.45;
+    font-variant-numeric: tabular-nums;
+    font-variation-settings: "wdth" 97;
+  }
+
+  figcaption {
+    max-width: 62ch;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+    font-variation-settings: "wdth" 92;
+  }
+
+  /* ---- Layout ---- */
+  .frame {
+    padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.25rem, 2.4vw, 2.5rem);
+    padding-inline: clamp(1rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .stage {
+    position: sticky;
+    top: var(--header-h);
+    height: calc(100svh - var(--header-h));
+    overflow: hidden;
+  }
+
+  .stage--short {
+    height: calc(100svh - var(--header-h) - 6rem);
+  }
+
+  .read {
+    padding-inline: 0;
+    padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(3rem, 6vw, 5rem);
+  }
+
+  .band {
+    padding-inline: 0;
+    padding-block: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  /* A photograph and two colour tiles, rearranged by width. */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mosaic > :nth-child(1) {
+    grid-column: 1 / 3;
+  }
+
+  @media (min-width: 640px) {
+    .mosaic {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: repeat(2, auto);
+    }
+
+    .mosaic > :nth-child(1) {
+      grid-column: 1 / 3;
+      grid-row: 1 / 3;
+    }
+
+    .mosaic > :nth-child(2) {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    .mosaic > :nth-child(3) {
+      grid-column: 3;
+      grid-row: 2;
+    }
+  }
+
+  /* ---- Buttons: one shape, one fill, square corners ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.875rem;
+    padding: 0.6rem 1.35rem;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-size: var(--step-small);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      transform 120ms ease;
+  }
+
+  .btn:hover {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn--accent {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  .btn--accent:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .btn--ghost {
+    background: var(--color-paper-2);
+    color: var(--color-ink);
+  }
+
+  .btn--ghost:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .btn--on-dark {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .btn--on-dark:hover {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  .btn--block {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .link-line {
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    padding-bottom: 1px;
+    transition: opacity 150ms ease;
+  }
+
+  .link-line:hover {
+    opacity: 0.6;
+  }
+
+  /* ---- Found photographs: one treatment, warm monochrome ---- */
+  .photo {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-paper-3);
+  }
+
+  .photo > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) sepia(0.26) contrast(1.22) brightness(0.97);
+    display: block;
+  }
+
+  .photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--color-paper);
+    mix-blend-mode: multiply;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  /* ---- The slip (process receipt) ---- */
+  .slip {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - 14px),
+      95% 100%,
+      90% calc(100% - 14px),
+      85% 100%,
+      80% calc(100% - 14px),
+      75% 100%,
+      70% calc(100% - 14px),
+      65% 100%,
+      60% calc(100% - 14px),
+      55% 100%,
+      50% calc(100% - 14px),
+      45% 100%,
+      40% calc(100% - 14px),
+      35% 100%,
+      30% calc(100% - 14px),
+      25% 100%,
+      20% calc(100% - 14px),
+      15% 100%,
+      10% calc(100% - 14px),
+      5% 100%,
+      0 calc(100% - 14px)
+    );
+    padding-bottom: 2rem;
+  }
+
+  .slip-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding-block: 0.4rem;
+  }
+
+  .slip-row > span:first-child {
+    flex: 0 1 auto;
+  }
+
+  .slip-leader {
+    flex: 1 1 auto;
+    min-width: 1.5rem;
+    height: 4px;
+    border-bottom: 2px dotted var(--color-paper-4);
+    margin-inline: 0.35rem;
+    transform: translateY(-0.22rem);
+  }
+
+  /* ---- Accordion ---- */
+  .qa summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-block: 1.15rem;
+  }
+
+  .qa summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .qa summary:hover .qa-q {
+    color: var(--color-accent-2);
+  }
+
+  .qa-a {
+    padding-bottom: 1.25rem;
+    max-width: 42ch;
+    color: var(--color-ink-2);
+  }
+
+  /* ---- Swatches ---- */
+  .swatch {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px rgb(20 32 28 / 0.22);
+    transition: transform 140ms ease;
+  }
+
+  .swatch:hover {
+    transform: scale(1.08);
+  }
+
+  /* ---- Reveal ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .field-dark {
+    background: var(--color-field);
+    color: var(--color-field-ink);
+  }
+
+  .field-accent {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  /* A letter on a sheet with a scalloped bottom edge, and a tear-off strip. */
+  .sheet {
+    --notch: 11px;
+    -webkit-mask:
+      linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--notch)) no-repeat,
+      radial-gradient(circle at 50% 0, #000 9px, transparent 9.5px) 0 100% /
+        18px var(--notch) repeat-x;
+    mask:
+      linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--notch)) no-repeat,
+      radial-gradient(circle at 50% 0, #000 9px, transparent 9.5px) 0 100% /
+        18px var(--notch) repeat-x;
+    -webkit-mask-composite: source-over;
+    mask-composite: add;
+  }
+
+  .tear-line {
+    height: 12px;
+    background-image: radial-gradient(
+      circle at 6px 6px,
+      var(--color-paper) 2.6px,
+      transparent 2.8px
+    );
+    background-size: 12px 12px;
+    background-repeat: repeat-x;
+    background-position: center;
+  }
+
+  /* ---- Product grid ---- */
+  .tile-art {
+    background: var(--color-paper-2);
+    aspect-ratio: 4 / 5;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .tile-art:hover .garment {
+    transform: scale(1.03);
+  }
+
+  .garment {
+    transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* One moving picture per page: a slow drift on a photograph. */
+  @keyframes drift {
+    from {
+      transform: scale(1.03) translate3d(0, 0, 0);
+    }
+    to {
+      transform: scale(1.13) translate3d(-1.6%, -1.2%, 0);
+    }
+  }
+
+  .drift > img,
+  .drift > video {
+    animation: drift 30s ease-in-out infinite alternate;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .drift > img,
+    .drift > video {
+      animation: none;
+      transform: none;
+    }
+  }
+
+  /* ---- Forms ---- */
+  .field {
+    width: 100%;
+    background: var(--color-paper);
+    border: 0;
+    border-bottom: 1px solid var(--color-paper-4);
+    padding: 0.6rem 0;
+    font-size: var(--step-body);
+    border-radius: 0;
+    transition: border-color 150ms ease;
+  }
+
+  .field:focus {
+    outline: none;
+    border-bottom-color: var(--color-ink);
+  }
+
+  .field::placeholder {
+    color: var(--color-ink-3);
+  }
+
+  select.field {
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+      linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position:
+      calc(100% - 14px) calc(50% + 2px),
+      calc(100% - 9px) calc(50% + 2px);
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 1.75rem;
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --header-h: 4rem;
+  }
+
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .stage {
+    position: relative;
+    top: 0;
+    height: 52svh;
+    order: -1;
+  }
+
+  .stage--short {
+    height: 32svh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
