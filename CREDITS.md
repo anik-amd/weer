@@ -1,5 +1,11 @@
 # Picture and footage credits
 
+> **These files are not covered by the repository's MIT licence.** The
+> photographs and video clips under `public/photos/` were found in open
+> collections and remain under their own licences (public domain, CC0, CC
+> BY 3.0, CC BY-SA 3.0 and CC BY-SA 4.0). Reuse them under their own terms.
+> The source code, copy and drawings elsewhere in this repository are MIT.
+
 Every photograph and video on this site was found in open collections. They
 show the world of reclaimed fibre, not the fictional WEER studio. The same
 list appears in the site footer.

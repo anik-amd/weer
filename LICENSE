@@ -1,8 +1,6 @@
 MIT License
 
-Copyright (c) 2026 WEER (fictional) — this repository is a demonstration
-project. The WEER brand, its products, its people, its numbers and every piece
-of copy on the site are fictional and were written by AI.
+Copyright (c) 2026 Anik Ahmed
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-NOTE ON THE PHOTOGRAPHS AND FOOTAGE
-
-The photographs and video clips under public/photos/ are not covered by the
-MIT licence above. They were found in open collections and remain under their
-own licences (public domain, CC0, CC BY 3.0, CC BY-SA 3.0 and CC BY-SA 4.0).
-Each file's title, creator, licence and source page are listed in CREDITS.md
-and in the site footer. Reuse them under their own terms.
