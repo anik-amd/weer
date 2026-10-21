@@ -49,10 +49,10 @@ export function Footer() {
         <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2">
           <div className="meta leading-relaxed">
             <h2 className="t-body font-semibold text-paper">Visit</h2>
-            <p className="mt-1 opacity-80">{BRAND.address}</p>
-            <p className="opacity-80">{BRAND.addressLine2}</p>
-            <p className="mt-2 opacity-80">{BRAND.hours}</p>
-            <p className="opacity-80">{BRAND.travel}</p>
+            <p className="mt-1 opacity-90">{BRAND.address}</p>
+            <p className="opacity-90">{BRAND.addressLine2}</p>
+            <p className="mt-2 opacity-90">{BRAND.hours}</p>
+            <p className="opacity-90">{BRAND.travel}</p>
           </div>
           <div className="meta leading-relaxed">
             <h2 className="t-body font-semibold text-paper">Write</h2>
@@ -61,13 +61,13 @@ export function Footer() {
                 {BRAND.email}
               </a>
             </p>
-            <p className="opacity-80">{BRAND.phone}</p>
+            <p className="opacity-90">{BRAND.phone}</p>
             <p className="mt-2 font-semibold text-paper">Follow</p>
-            <p className="opacity-80">Instagram, Pinterest, Nothing, Threads</p>
+            <p className="opacity-90">Instagram, Pinterest, Nothing, Threads</p>
           </div>
         </div>
 
-        <p className="meta mt-12 text-paper/60">
+        <p className="meta mt-12 text-paper/80">
           {BRAND.name} studio {BRAND.city}, founded {BRAND.founded}. Chamber{" "}
           {BRAND.kvk}.
         </p>
@@ -87,7 +87,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 max-w-[42rem]">
-          <p className="meta text-paper/60">
+          <p className="meta text-paper/80">
             Photographs and footage found in open collections, showing the world
             of reclaimed fibre rather than our fictional studio. Every garment
             on this site is a drawing made in code, not a photograph of a
@@ -95,9 +95,9 @@ export function Footer() {
           </p>
           <ul className="mt-3 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
             {CREDITS.map((c) => (
-              <li key={c.title} className="meta text-paper/50">
+              <li key={c.title} className="meta text-paper/70">
                 <span className="block">{c.title}</span>
-                <span className="block opacity-80">{c.credit}</span>
+                <span className="block opacity-90">{c.credit}</span>
               </li>
             ))}
           </ul>

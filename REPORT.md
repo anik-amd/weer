@@ -19,6 +19,12 @@ node draw.mjs --sector fashion \
 **Direction: `split-stage`, seed 1615397456.** One fixed half that holds the
 product or a photograph and never moves, one scrolling half that holds the
 reading. The fixed half crossfades as the reader reaches a new section.
+
+**The field.** A section that changes the ground colour runs off the left edge
+of the page and meets the photograph at a clean vertical line, so the text on
+it keeps the same left margin as every other line on the site. A band that
+stops at the margin with its own text flush against it reads as a box with
+the words spilling out of it, not as a field.
 Section blueprints taken from the sheet: the itinerary-on-a-slip (the process
 receipt), the plain names in columns (the team and the stockists), the
 photograph with figure tiles (the numbers), the founder's letter on a
@@ -114,7 +120,21 @@ Caps applied: One typeface, five sizes, one accent, square corners, no hairlines
 Top three problems (most visible first), each with the screenshot it shows in and the fix:
 1. The shop's "Where these come from" heading sat in a half-width grid cell and broke to four lines on a tablet (shop tablet-page-01) — pulled the heading and paragraph out of the cell so they take the full width.
 2. The product name was 50px and nothing dominated the first screen (shop/cirrus desktop-fold) — the garment drawing does not count as a picture for that rule, so the name was raised to the display step.
-3. The checkout had no moving picture and only four elements moved (checkout desktop-page-01) — the "What happens next" band was rebuilt with four steps, a real clip and per-step entrances.
+3. The checkout had no moving picture and only four elements moved (checkout desktop-page-01) - the "What happens next" band was rebuilt with four steps, a real clip and per-step entrances.
+```
+
+```
+ROUND 4
+Seen in one second: A workshop, a t-shirt, and a claim you can check.
+Idea (one sentence): A t-shirt is rebuilt in front of you out of four dye batches you pick.
+Live thing: The batch builder in the fixed half.
+Layout words by section: hero=display headline + lead + one button. / process=dark field bleeding off the page, receipt slip, video band. / collection=three garments. / numbers=photo + two colour tiles. / people=names in columns. / closing=one sentence, one button.
+Scores: design 8 usability 8 creativity 7 content 8 overall 7.5
+Caps applied: One typeface, five sizes, one accent, square corners, no hairlines, no gradients, no shadows at rest, no monospace, no eyebrow labels, no index numbers, no fabricated reviews or press.
+Top three problems (most visible first), each with the screenshot it shows in and the fix:
+1. The dark band was a box with its own heading flush against its left edge, so the words looked like they were spilling out (home desktop-page-01) - the field now runs off the left edge of the page and meets the photograph at a clean vertical line, and the text on it keeps the site's left margin.
+2. The footer's muted text on the dark field sat at 5.2:1 and the third ink tone at 5.2:1 as well (checkout desktop-page-01) - the footer's greys were lifted and the third ink tone darkened to 7.3:1, so every running line clears 7:1.
+3. The stage ate too much of a short window, pushing the first action below the fold (tablet-page-01) - the mobile stage went from 52svh to 44svh and the reading column's vertical padding tightened.
 ```
 
 **What still falls short.** The scroll films are honest but the site has no
@@ -140,6 +160,7 @@ photography, a payment backend, and the stock figures behind each size.
 | `/shop/cirrus` | 0 FAIL, 0 WARN |
 | `/shop/offcut-cap` | 0 FAIL, 0 WARN |
 | `/checkout` | 0 FAIL, 0 WARN |
+| `/shop/offcut-cap` | 0 FAIL, 0 WARN |
 
 Measured on every page: Archivo 100%, five sizes (16 / 20 / 25 / 50 / 80),
 body copy at 20px, headlines at two lines or fewer, 12px margins on a phone

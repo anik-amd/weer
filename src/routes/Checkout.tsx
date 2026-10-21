@@ -261,7 +261,7 @@ export function Checkout() {
                   </dd>
                 </div>
               </dl>
-              <p className="t-body mt-5 text-paper/75">
+              <p className="t-body mt-5 text-paper/90">
                 Free shipping over 75 euro. We ship within two working days and
                 cover returns for thirty.
               </p>

@@ -56,7 +56,7 @@ export function About() {
         </section>
 
         {/* --------------------- the letter --------------------- */}
-        <section id="letter" className="field-dark read">
+        <section id="letter" className="field-dark read bleed">
           <Reveal>
             <div className="sheet mx-auto max-w-[40rem] bg-paper px-7 py-10 text-ink md:px-11 md:py-14">
               <div className="flex items-center gap-4">

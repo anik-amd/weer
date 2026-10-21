@@ -54,14 +54,14 @@ export function Home() {
         </section>
 
         {/* ------------- the process, printed as a slip ------------- */}
-        <section id="process" className="field-dark read">
+        <section id="process" className="field-dark read bleed">
           <Reveal>
             <h2 className="t-head max-w-[16ch] text-paper">
               How a shirt comes back
             </h2>
           </Reveal>
           <Reveal delay={80}>
-            <p className="body-copy mt-6 text-paper/75">
+            <p className="body-copy mt-6 text-paper/90">
               Nineteen days from the collection point to your door. The
               receipt below is the real one: four shirts in, one shirt out, and
               nothing new bought in.

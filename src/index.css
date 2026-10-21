@@ -10,7 +10,7 @@
   /* Ink: deep pine black, never #000. */
   --color-ink: #14201c;
   --color-ink-2: #3c4944;
-  --color-ink-3: #55605a;
+  --color-ink-3: #3f4a44;
 
   /* One accent: the sorting-bucket marigold. */
   --color-accent: #e09b23;
@@ -30,6 +30,8 @@
   :root {
     --header-h: 4.5rem;
     --measure: 58ch;
+    --frame: clamp(1.25rem, 4vw, 3.5rem);
+    --gutter: clamp(1.25rem, 2.4vw, 2.5rem);
 
     /* Five sizes, and only five. */
     --step-display: clamp(2.75rem, 1rem + 5.4vw, 5rem);
@@ -162,14 +164,14 @@
 
   /* ---- Layout ---- */
   .frame {
-    padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+    padding-inline: var(--frame);
   }
 
   .split {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(1.25rem, 2.4vw, 2.5rem);
-    padding-inline: clamp(1rem, 4vw, 3.5rem);
+    gap: var(--gutter);
+    padding-inline: var(--frame);
     align-items: start;
   }
 
@@ -187,6 +189,21 @@
   .read {
     padding-inline: 0;
     padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(3rem, 6vw, 5rem);
+  }
+
+  /* A field of colour that runs off the edge of the page, so the text on it
+     keeps a proper margin instead of sitting against its own edge. */
+  .bleed {
+    margin-left: calc(-1 * var(--frame));
+    margin-right: calc(-1 * var(--frame));
+    padding-inline: var(--frame);
+  }
+
+  @media (min-width: 901px) {
+    .bleed {
+      margin-right: calc(-1 * var(--gutter));
+      padding-right: var(--frame);
+    }
   }
 
   .band {
@@ -552,22 +569,26 @@
 @media (max-width: 900px) {
   :root {
     --header-h: 4rem;
+    --frame: clamp(1.25rem, 4vw, 2rem);
   }
 
   .split {
     grid-template-columns: minmax(0, 1fr);
-    padding-inline: clamp(1.25rem, 4vw, 2rem);
   }
 
   .stage {
     position: relative;
     top: 0;
-    height: 52svh;
+    height: 44svh;
     order: -1;
   }
 
   .stage--short {
     height: 32svh;
+  }
+
+  .read {
+    padding-block: clamp(1.75rem, 4vw, 3rem) clamp(2.5rem, 6vw, 5rem);
   }
 }
 
