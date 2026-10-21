@@ -49,11 +49,17 @@ the plain sentence with one action, and the split footer.
 > On this page, **the ball of reclaimed yarn** becomes **a colour-batch builder that shows exactly which four old shirts your new one is made of**.
 
 **The live thing:** the fixed half of the home page holds a t-shirt you can
-rebuild. Pick four dye batches and the garment re-knits: the first slot sets
-the body, the other three become the marl in the fabric. Four the same gives
-you a solid shirt — which is exactly how a real reclaimed yarn behaves. The
-builder works with a thumb, has a plain fallback (the chosen batch is written
-out in the caption), and never blocks reading.
+rebuild. One row of six buttons, one job each: pick a dye batch and the
+garment is re-spun in front of you. Each button is a real batch from the
+catalogue, so the landing page and the shop show the same four shirts. The
+builder works with a thumb, has a plain fallback (the batch is written out in
+the caption), and never blocks reading.
+
+**The model underneath:** every colourway of every piece is spun from its own
+four shirts. That is what makes the swatches meaningful. Pick "Clay" on the
+Cirrus and you get the clay batch - body in clay, marled with the three
+shirts it was spun with. `batches` in `src/data/products.ts` holds the truth;
+`batchOf`, `batchHexes` and `describeBatch` are the only ways to read it.
 
 ---
 
@@ -121,6 +127,20 @@ Top three problems (most visible first), each with the screenshot it shows in an
 1. The shop's "Where these come from" heading sat in a half-width grid cell and broke to four lines on a tablet (shop tablet-page-01) — pulled the heading and paragraph out of the cell so they take the full width.
 2. The product name was 50px and nothing dominated the first screen (shop/cirrus desktop-fold) — the garment drawing does not count as a picture for that rule, so the name was raised to the display step.
 3. The checkout had no moving picture and only four elements moved (checkout desktop-page-01) - the "What happens next" band was rebuilt with four steps, a real clip and per-step entrances.
+```
+
+```
+ROUND 5
+Seen in one second: A workshop, a t-shirt, and a claim you can check.
+Idea (one sentence): A t-shirt is rebuilt in front of you out of the four old shirts it was spun from.
+Live thing: One row of dye-batch buttons in the fixed half.
+Layout words by section: hero=display headline + lead + one button. / process=dark field bleeding off the page, receipt slip, video band. / collection=three garments. / numbers=photo + two colour tiles. / people=names in columns. / closing=one sentence, one button.
+Scores: design 8 usability 8 creativity 8 content 8 overall 8
+Caps applied: One typeface, five sizes, one accent, square corners, no hairlines, no gradients, no shadows at rest, no monospace, no eyebrow labels, no index numbers, no fabricated reviews or press.
+Top three problems (most visible first), each with the screenshot it shows in and the fix:
+1. The colour swatches on the listing and the product page changed the label but not the drawing (shop desktop-page-01) - the artwork was drawn from the product's single fixed batch, so every colourway looked the same. Each colourway now carries its own four shirts, and the swatches re-tint the garment.
+2. The batch builder had two sets of buttons - four empty slots and a palette of eleven - and the slots did nothing (home desktop-fold) - it is now one row of six dye-batch buttons, each a real batch from the catalogue, with the four shirts written out underneath.
+3. The builder's readout sat directly above the headline and was read as a kicker label (mobile-page-01) - the readout became the second line of the label rather than a line of its own, and the buttons moved under it.
 ```
 
 ```

@@ -85,6 +85,15 @@ colourways, the batch, the print mark, the sizes and the stock follow. To
 change the story, the numbers, the process, the FAQ or the team, edit
 `src/data/site.ts`. The pages read from those two files and nowhere else.
 
+**Each colourway has its own four shirts.** A product carries
+`batches: { <colourway>: [four colourway ids] }`, and the first id is the body
+colour. `batchOf()`, `batchHexes()` and `describeBatch()` are the only ways to
+read it. The colour swatches on the listing, on the product page, in the bag
+and in the checkout all re-tint the drawing through those helpers — if you add
+a colourway and forget its batch, the swatch will do nothing. `DYE_BATCHES` in
+the same file is the home page's builder; it points at real catalogue batches
+so the landing page and the shop can never drift apart.
+
 Keep the numbers consistent. If you change "14,800 shirts collected", change
 it in `FIGURES` (which the home page and the About page both read) and check
 that the process receipt still adds up to nineteen days.

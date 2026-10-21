@@ -4,7 +4,7 @@ import { Garment } from "../components/Garment";
 import { Photo } from "../components/Photo";
 import { Reveal } from "../components/Reveal";
 import { useCart } from "../lib/cart";
-import { COLORWAYS, euro } from "../data/products";
+import { COLORWAYS, batchHexes, euro } from "../data/products";
 import { BRAND, PHOTOS } from "../data/site";
 
 const STEPS = [
@@ -94,9 +94,7 @@ export function Checkout() {
                       <div className="tile-art w-24 shrink-0">
                         <Garment
                           kind={product.kind}
-                          colours={product.batch.map(
-                            (b) => COLORWAYS[b]?.hex ?? "#e2dac5",
-                          )}
+                          colours={batchHexes(product, line.colourway)}
                           print={product.print}
                           className="h-full w-full p-1.5"
                         />

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCart } from "../lib/cart";
-import { COLORWAYS, euro } from "../data/products";
+import { COLORWAYS, batchHexes, euro } from "../data/products";
 import { Garment } from "./Garment";
 
 export function CartDrawer() {
@@ -87,9 +87,7 @@ export function CartDrawer() {
                       >
                         <Garment
                           kind={product.kind}
-                          colours={product.batch.map(
-                            (b) => COLORWAYS[b]?.hex ?? "#e2dac5",
-                          )}
+                          colours={batchHexes(product, line.colourway)}
                           print={product.print}
                           className="h-full w-full p-1.5"
                         />

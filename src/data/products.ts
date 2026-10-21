@@ -34,8 +34,11 @@ export type Product = {
   fit: "Boxy" | "Regular" | "Cropped" | "Adjustable";
   gsm: number;
   colourways: string[];
-  /** The four colourways this piece was spun from. */
-  batch: string[];
+  /**
+   * Each colourway is spun from its own four shirts, so every colourway has
+   * its own batch. The first entry is the body colour.
+   */
+  batches: Record<string, string[]>;
   print: PrintMark;
   sizes: Size[];
   facts: { label: string; value: string }[];
@@ -82,7 +85,12 @@ export const PRODUCTS: Product[] = [
     fit: "Boxy",
     gsm: 240,
     colourways: ["bone", "clay", "ink", "sea"],
-    batch: ["bone", "bone", "bone", "chalk"],
+    batches: {
+      bone: ["bone", "bone", "bone", "chalk"],
+      clay: ["clay", "clay", "bone", "ochre"],
+      ink: ["ink", "ink", "stone", "sea"],
+      sea: ["sea", "sea", "ink", "bone"],
+    },
     print: "four",
     sizes: full(9),
     facts: [
@@ -107,7 +115,11 @@ export const PRODUCTS: Product[] = [
     fit: "Regular",
     gsm: 300,
     colourways: ["bone", "moss", "ink"],
-    batch: ["moss", "bone", "moss", "ink"],
+    batches: {
+      bone: ["bone", "bone", "chalk", "stone"],
+      moss: ["moss", "moss", "bone", "ink"],
+      ink: ["ink", "ink", "stone", "moss"],
+    },
     print: "contour",
     sizes: full(7),
     facts: [
@@ -132,7 +144,11 @@ export const PRODUCTS: Product[] = [
     fit: "Regular",
     gsm: 260,
     colourways: ["cobalt", "clay", "forest"],
-    batch: ["cobalt", "chalk", "cobalt", "chalk"],
+    batches: {
+      cobalt: ["cobalt", "chalk", "cobalt", "chalk"],
+      clay: ["clay", "chalk", "clay", "chalk"],
+      forest: ["forest", "chalk", "forest", "chalk"],
+    },
     print: "bar",
     sizes: full(6),
     facts: [
@@ -157,7 +173,11 @@ export const PRODUCTS: Product[] = [
     fit: "Boxy",
     gsm: 260,
     colourways: ["bone", "ink", "ochre"],
-    batch: ["bone", "ink", "bone", "ochre"],
+    batches: {
+      bone: ["bone", "bone", "bone", "stone"],
+      ink: ["ink", "ink", "stone", "bone"],
+      ochre: ["ochre", "ochre", "clay", "bone"],
+    },
     print: "cross",
     sizes: full(5),
     facts: [
@@ -182,7 +202,11 @@ export const PRODUCTS: Product[] = [
     fit: "Cropped",
     gsm: 220,
     colourways: ["bone", "clay", "sky"],
-    batch: ["bone", "clay", "bone", "chalk"],
+    batches: {
+      bone: ["bone", "bone", "bone", "chalk"],
+      clay: ["clay", "clay", "bone", "chalk"],
+      sky: ["sky", "sky", "bone", "stone"],
+    },
     print: "ring",
     sizes: short(8),
     facts: [
@@ -207,7 +231,11 @@ export const PRODUCTS: Product[] = [
     fit: "Regular",
     gsm: 240,
     colourways: ["ochre", "moss", "clay"],
-    batch: ["ochre", "moss", "clay", "bone"],
+    batches: {
+      ochre: ["ochre", "moss", "clay", "bone"],
+      moss: ["moss", "ochre", "clay", "bone"],
+      clay: ["clay", "ochre", "moss", "bone"],
+    },
     print: "stack",
     sizes: full(5),
     facts: [
@@ -233,7 +261,11 @@ export const PRODUCTS: Product[] = [
     fit: "Adjustable",
     gsm: 240,
     colourways: ["stone", "ink", "clay"],
-    batch: ["stone", "ink", "stone", "clay"],
+    batches: {
+      stone: ["stone", "stone", "ink", "bone"],
+      ink: ["ink", "ink", "stone", "clay"],
+      clay: ["clay", "clay", "stone", "bone"],
+    },
     print: "none",
     sizes: [{ size: "One size", stock: 14 }],
     facts: [
@@ -250,6 +282,46 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const getProduct = (id: string) => PRODUCTS.find((p) => p.id === id);
+
+/** The four shirts a given colourway of a given piece was spun from. */
+export const batchOf = (product: Product, colourway: string): string[] =>
+  product.batches[colourway] ?? product.batches[product.colourways[0]];
+
+/** The same four shirts, as hex, ready for the garment drawing. */
+export const batchHexes = (product: Product, colourway: string): string[] =>
+  batchOf(product, colourway).map((id) => COLORWAYS[id]?.hex ?? "#e2dac5");
+
+/** "Bone x3, Chalk x1" */
+export const describeBatch = (ids: string[]): string => {
+  const counts = new Map<string, number>();
+  ids.forEach((id) => counts.set(id, (counts.get(id) ?? 0) + 1));
+  return [...counts.entries()]
+    .map(([id, n]) => (n > 1 ? `${COLORWAYS[id]?.name} x${n}` : COLORWAYS[id]?.name))
+    .join(", ");
+};
+
+/**
+ * The batches offered on the home page. Each one is a real batch from the
+ * catalogue, so the landing page shows the same shirts the shop sells.
+ */
+export const DYE_BATCHES = [
+  { product: "cirrus", colourway: "bone" },
+  { product: "cirrus", colourway: "clay" },
+  { product: "terra", colourway: "moss" },
+  { product: "cirrus", colourway: "sea" },
+  { product: "cirrus", colourway: "ink" },
+  { product: "loop", colourway: "ochre" },
+].map((b) => {
+  const product = getProduct(b.product)!;
+  return {
+    ...b,
+    product,
+    name: COLORWAYS[b.colourway]?.name ?? b.colourway,
+    hex: COLORWAYS[b.colourway]?.hex ?? "#e2dac5",
+    ids: batchOf(product, b.colourway),
+    hexes: batchHexes(product, b.colourway),
+  };
+});
 
 export const euro = (value: number) =>
   new Intl.NumberFormat("en-IE", {

@@ -5,7 +5,7 @@ import { Photo } from "../components/Photo";
 import { ProductCard } from "../components/ProductCard";
 import { Reveal } from "../components/Reveal";
 import { useCart } from "../lib/cart";
-import { COLORWAYS, PRODUCTS, euro, getProduct } from "../data/products";
+import { COLORWAYS, PRODUCTS, batchOf, euro, getProduct } from "../data/products";
 import { PHOTOS } from "../data/site";
 
 export function ProductPage() {
@@ -37,8 +37,9 @@ export function ProductPage() {
     );
   }
 
-  const batchHexes = product.batch.map((b) => COLORWAYS[b]?.hex ?? "#e2dac5");
-  const distinct = new Set(product.batch).size;
+  const batchIds = batchOf(product, active);
+  const batchHexes = batchIds.map((b) => COLORWAYS[b]?.hex ?? "#e2dac5");
+  const distinct = new Set(batchIds).size;
 
   const selectedSize = size ?? product.sizes[0]?.size;
   const selected = product.sizes.find((s) => s.size === selectedSize);
@@ -163,7 +164,7 @@ export function ProductPage() {
                   : "Four shirts of the same dye, spun into a solid body. The flecks are the older cotton, not a blend."}
               </p>
               <ul className="mt-4 flex flex-wrap gap-2">
-                {product.batch.map((b, i) => (
+                {batchIds.map((b, i) => (
                   <li
                     key={i}
                     className="flex items-center gap-2 border border-paper-4 px-3 py-1.5 t-body"

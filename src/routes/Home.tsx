@@ -7,7 +7,7 @@ import { Photo } from "../components/Photo";
 import { Reveal } from "../components/Reveal";
 import { Stage, useActiveSection } from "../components/Stage";
 import { BRAND, FIGURES, PHOTOS, PROCESS, PROCESS_RESULT, STOCKISTS, TEAM } from "../data/site";
-import { COLORWAYS, PRODUCTS } from "../data/products";
+import { DYE_BATCHES, PRODUCTS } from "../data/products";
 
 const SECTIONS = ["hero", "process", "collection", "numbers", "people", "closing"];
 
@@ -22,9 +22,9 @@ const COLLECTION_POINTS = [
 
 export function Home() {
   const active = useActiveSection(SECTIONS);
-  const [batch, setBatch] = useState<string[]>(["bone", "bone", "bone", "clay"]);
+  const [dye, setDye] = useState("bone");
 
-  const batchHexes = batch.map((id) => COLORWAYS[id]?.hex ?? "#e2dac5");
+  const batch = DYE_BATCHES.find((b) => b.colourway === dye) ?? DYE_BATCHES[0];
   const featured = PRODUCTS.filter((p) =>
     ["cirrus", "terra", "loop"].includes(p.id),
   );
@@ -303,14 +303,14 @@ export function Home() {
           <div className="flex h-full flex-col">
             <div className="flex min-h-0 flex-1 items-center justify-center p-6 pb-2">
               <Garment
-                kind="tee"
-                colours={batchHexes}
-                print="four"
+                kind={batch.product.kind}
+                colours={batch.hexes}
+                print={batch.product.print}
                 className="h-full max-h-[34rem] w-auto"
               />
             </div>
             {active === "hero" && (
-              <BatchBuilder batch={batch} onChange={setBatch} />
+              <BatchBuilder current={dye} onPick={setDye} />
             )}
           </div>
         ) : active === "process" ? (

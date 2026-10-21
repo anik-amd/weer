@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "motion/react";
-import { COLORWAYS, euro, type Product } from "../data/products";
+import { COLORWAYS, batchHexes, euro, type Product } from "../data/products";
 import { Garment } from "./Garment";
 
 export function ProductCard({
@@ -16,7 +16,7 @@ export function ProductCard({
 }) {
   const reduce = useReducedMotion();
   const active = colourway ?? product.colourways[0];
-  const batch = product.batch.map((b) => COLORWAYS[b]?.hex ?? "#e2dac5");
+  const batch = batchHexes(product, active);
   const swatchHexes = new Set(batch.map((h) => h.toLowerCase()));
 
   const rise = reduce
