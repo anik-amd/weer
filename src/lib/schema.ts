@@ -9,7 +9,7 @@
  * Nothing here invents anything the site does not already say. There are no
  * ratings and no reviews, because the site has none.
  */
-import { BRAND, FAQ, SITE } from "../data/site";
+import { BRAND, FAQ, SITE, TEAM } from "../data/site";
 import { COLORWAYS, PRODUCTS, getProduct } from "../data/products";
 
 type Thing = Record<string, unknown>;
@@ -195,6 +195,16 @@ export function schemaFor(path: string): Thing[] {
         { name: "About us", path: "/about" },
       ]),
     );
+    // The people behind it. The team is small and named, which is the
+    // whole point of the page.
+    for (const m of TEAM) {
+      graph.push({
+        "@type": "Person",
+        name: m.name,
+        jobTitle: m.role,
+        worksFor: { "@id": `${url("/")}#organization` },
+      });
+    }
   }
 
   if (path === "/contact") {
