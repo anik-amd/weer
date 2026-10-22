@@ -1,11 +1,5 @@
 import { useEffect } from "react";
-import {
-  BrowserRouter,
-  Link,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { CartDrawer } from "./components/CartDrawer";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
@@ -28,8 +22,8 @@ function ScrollToTop() {
 
 function NotFound() {
   return (
-    <div className="frame read mx-auto max-w-[40rem]">
-      <h1 className="head">This page was never knitted.</h1>
+    <div className="read read--page mx-auto max-w-[46rem]">
+      <h1 className="t-display">This page was never knitted.</h1>
       <p className="body-copy mt-4">
         The link you followed does not lead anywhere. The collection does.
       </p>
@@ -42,30 +36,28 @@ function NotFound() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <CartProvider>
-        <ScrollToTop />
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-solid focus:px-4 focus:py-2 focus:text-solid-ink"
-        >
-          Skip to content
-        </a>
-        <Header />
-        <main id="main">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/shop/:id" element={<ProductPage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-        <CartDrawer />
-      </CartProvider>
-    </BrowserRouter>
+    <CartProvider>
+      <ScrollToTop />
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-solid focus:px-4 focus:py-2 focus:text-solid-ink"
+      >
+        Skip to content
+      </a>
+      <Header />
+      <main id="main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/shop/:id" element={<ProductPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+      <CartDrawer />
+    </CartProvider>
   );
 }

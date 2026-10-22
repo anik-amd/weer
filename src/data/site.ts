@@ -1,3 +1,5 @@
+import { PRODUCTS } from "./products";
+
 export const BRAND = {
   name: "WEER",
   meaning: "Dutch for again",
@@ -15,6 +17,74 @@ export const BRAND = {
   kvk: "Rotterdam 82411907",
   vat: "NL860418822B01",
 };
+
+export type Page = {
+  /** The path the reader sees. */
+  path: string;
+  /**
+   * Where the generated file goes, relative to the publish directory. The
+   * host serves `shop.html` for `/shop`, so the reader never gets a
+   * redirect on the way to a page.
+   */
+  file: string;
+  title: string;
+  description: string;
+};
+
+/**
+ * Every page the build generates. The prerenderer walks this list, renders
+ * each route and writes the HTML, so the site is served as documents rather
+ * than as a script that draws them.
+ */
+export const PAGES: Page[] = [
+  {
+    path: "/",
+    file: "index.html",
+    title: "WEER — t-shirts made from the ones you already own",
+    description:
+      "WEER, a design study of a t-shirt shop: a Rotterdam studio that shreds reclaimed t-shirts into yarn and knits new ones. The brand, the products, the people and the numbers are invented, and the copy, art and code were written by AI.",
+  },
+  {
+    path: "/shop",
+    file: "shop.html",
+    title: "The collection — WEER",
+    description:
+      "Seven pieces knitted from reclaimed t-shirts: the collection, the dye batches each one came from, and the world of reclaimed fibre they are made in.",
+  },
+  ...PRODUCTS.map<Page>((p) => ({
+    path: `/shop/${p.id}`,
+    file: `shop/${p.id}.html`,
+    title: `${p.name} — WEER`,
+    description: `${p.tagline} €${p.price}. ${p.description}`,
+  })),
+  {
+    path: "/about",
+    file: "about.html",
+    title: "About us — WEER",
+    description:
+      "The founder's letter, the history of a studio that never buys new fibre, the four things we refuse to do, and our own numbers.",
+  },
+  {
+    path: "/contact",
+    file: "contact.html",
+    title: "Contact — WEER",
+    description:
+      "Where to write, how to find the studio on Keileweg in Rotterdam, and the questions we are asked most.",
+  },
+  {
+    path: "/checkout",
+    file: "checkout.html",
+    title: "Your order — WEER",
+    description:
+      "The bag, the address, and what happens to an order after you place it.",
+  },
+  {
+    path: "/404",
+    file: "404.html",
+    title: "Nothing here — WEER",
+    description: "This page was never knitted.",
+  },
+];
 
 export const CREDITS: { title: string; credit: string }[] = [
   {

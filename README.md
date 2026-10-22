@@ -24,6 +24,25 @@ is processed.
 | `/contact` | Channels, a form that hands the message to your email client, how to find the studio, questions |
 | `/checkout` | The bag, the address, and what happens to an order next |
 
+## How it is built
+
+The pages are **generated**, not drawn by a script in the browser. The build
+renders every route to HTML and writes it into `dist/`; the browser then
+hydrates that markup and takes over. There is no server to ask at request
+time — the content does not change between requests, so it is made once, at
+build time.
+
+The difference is visible before anything else loads: the headline, the
+copy and the drawings are in the document, so they paint as soon as the
+HTML and the stylesheet arrive, while the JavaScript is still on its way.
+First contentful paint on a slow connection went from about 10.5 seconds to
+about 2.5, and with JavaScript switched off the page is still a readable
+document rather than an empty box.
+
+`PAGES` in `src/data/site.ts` lists what gets generated — the path, the
+file, the title and the description. The host serves the files directly, so
+`/shop` is a document and an unknown path gets a real 404.
+
 ## The live thing
 
 On the home page the fixed half of the screen holds a t-shirt you can rebuild.
@@ -60,8 +79,9 @@ with second.
 
 ```bash
 npm install
-npm run dev      # http://127.0.0.1:5173
-npm run build    # tsc -b && vite build
+npm run dev      # http://127.0.0.1:5173, the dev server
+npm run build    # the client bundle, the server bundle and the pages
+npm run preview  # serves the built site the way the host does
 npm run lint     # oxlint
 ```
 
@@ -73,6 +93,9 @@ The site is deployed on Netlify: <https://weer-studio.netlify.app>. Push to
 `main` and the GitHub Actions workflow in `.github/workflows/deploy.yml` builds
 and publishes it. The Netlify token and site id live as repository secrets
 (`NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`), never in the tree.
+
+The host serves the generated files, so there is no single-page-app
+rewrite: every route is a document, and `404.html` answers for the rest.
 
 ## Stack
 

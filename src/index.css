@@ -307,6 +307,12 @@
     padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(3rem, 6vw, 5rem);
   }
 
+  /* A reading block that is a page in its own right, rather than a section
+     inside the padded column of a split. It keeps the page margin. */
+  .read--page {
+    padding-inline: var(--frame);
+  }
+
   /* The first block of the reading column is the same height as the fixed
      half beside it, so the two columns end on one line instead of stepping.
      The content stays together at the top; the space falls below it. */
@@ -567,17 +573,39 @@
   }
 
   /* ---- Reveal ---- */
+  /* The page arrives as a document, so the content is visible from the
+     first paint. The browser arms the entrance only for what is out of
+     sight, and brings it in as the reader gets there. */
   .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal.is-out {
     opacity: 0;
     transform: translateY(22px);
-    transition:
-      opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .reveal.is-in {
     opacity: 1;
     transform: none;
+    transition:
+      opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* The theme button's label follows the theme on the document, so it is
+     right before React has run. */
+  .theme-label--dark {
+    display: none;
+  }
+
+  :root[data-theme="dark"] .theme-label--light {
+    display: none;
+  }
+
+  :root[data-theme="dark"] .theme-label--dark {
+    display: inline;
   }
 
   .field-dark {

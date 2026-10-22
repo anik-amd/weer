@@ -5,8 +5,9 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# The router is client-side, so every path returns the shell.
-# (public/_redirects ships the same rule inside the publish directory.)
+# Every route is generated as a document by the build, so the host serves
+# them as files. public/_redirects ships the same note inside the publish
+# directory; there is no single-page-app fallback.
 
 [[headers]]
   for = "/assets/*"

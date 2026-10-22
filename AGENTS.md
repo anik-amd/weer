@@ -33,11 +33,12 @@ redirect rule inside the published folder. Never write a token into the tree.
 
 ```
 src/
-  main.tsx              entry
+  entry-client.tsx      hydrates the generated markup
+  entry-server.tsx      renders a route to HTML, for the build
   App.tsx               router, header, footer, cart drawer
   index.css             design tokens, base, component classes
   data/products.ts      the seven pieces, colourways, sizes, print marks
-  data/site.ts          brand details, process, figures, team, faq, credits
+  data/site.ts          brand details, process, figures, team, faq, credits, pages
   lib/cart.tsx          cart context, reducer, localStorage
   lib/theme.ts          the light/dark hook (localStorage key `weer-theme`)
   components/
@@ -49,8 +50,45 @@ src/
     Header.tsx Footer.tsx CartDrawer.tsx Reveal.tsx
   routes/
     Home.tsx Shop.tsx ProductPage.tsx About.tsx Contact.tsx Checkout.tsx
+scripts/
+  prerender.mjs         writes the pages
+  serve.mjs             serves the built site the way the host does
 public/photos/          the found photographs and the two clips
 ```
+
+## How the site is generated
+
+The site is **prerendered**: the build renders every route to HTML and
+writes it into `dist/`, and the browser then hydrates that markup instead
+of drawing the page from an empty shell. It is not a server-rendered site
+at request time — there is no server to ask. The content never changes
+between requests, so generating it once at build time is the same result
+for less machinery.
+
+```
+npm run build          # client bundle, server bundle, then the pages
+npm run build:client   # vite build
+npm run build:server   # vite build --ssr src/entry-server.tsx --outDir .ssr
+npm run prerender      # node scripts/prerender.mjs
+npm run preview        # serve dist/ the way the host does
+```
+
+`PAGES` in `src/data/site.ts` is the list of what gets generated: the path,
+the file it is written to, the title and the description. Add a route there
+and it is generated, titled and discoverable. The file names are flat
+(`shop.html`, `shop/deck.html`) because the host then serves `/shop`
+without a redirect.
+
+`npm run preview` uses `scripts/serve.mjs` rather than `vite preview`,
+because `vite preview` falls back to the single-page shell and would hide
+the pages the build just generated.
+
+**Nothing may touch the browser while the server renders.** That is the
+whole rule: no `document`, no `window`, no `localStorage` during a render.
+`useTheme` keeps the theme on the document instead of in React state, and
+`Reveal` only hides what the browser has found to be out of sight. The
+server's markup and the browser's first render must be identical, or React
+will complain and throw the page away.
 
 ## Light and dark
 
@@ -153,13 +191,14 @@ that the process receipt still adds up to nineteen days.
 ```bash
 npm run lint      # oxlint, no errors
 npx tsc -b --noEmit
-npm run build
+npm run build     # the client bundle, the server bundle and the pages
 ```
 
-Then look at the thing. The design gate is a real browser:
+Then look at the thing, in the built site rather than the dev server:
 
 ```bash
-node "<skills>/scripts/inspect.mjs" "http://127.0.0.1:5173/" --out .taste-skill/inspect
+npm run preview   # serves dist/ the way the host does
+node "<skills>/scripts/inspect.mjs" "http://127.0.0.1:4173/" --out .taste-skill/inspect
 ```
 
 Run it on every route you touched, at 1440, 768 and 390. It measures
@@ -168,10 +207,20 @@ margins, motion and the rest. **Target: 0 FAIL.** The single allowed waiver
 is `--allow font-not-dealt`, because the type face was deliberately redrawn
 from the dealt one; the reason is written up in `REPORT.md`.
 
+The 404 page is the other exception. It is a stub: one sentence, one link
+and the footer. It has one picture, no film, and nothing to scroll, so
+`few-pictures`, `no-footage` and `still-page` do not apply to it. Everything
+else about it must pass.
+
 The gate reads the theme from the browser, so check **both** themes: it
 follows `prefers-color-scheme` when `localStorage` has no `weer-theme`. A
 contrast failure in the dark theme is usually an ink step that was not
 lifted to match the darker ground.
+
+Open the console as well. A prerendered page must hydrate without a
+mismatch: no "Hydration failed" and no warning about the server's markup
+not matching. If the console is not clean, the server and the browser
+disagree about something, and it will show up as a flash on the page.
 
 If you need real pictures, search the open collections with the assets
 script rather than reaching for a stock photo, and add the credit to

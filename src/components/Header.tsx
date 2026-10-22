@@ -13,7 +13,7 @@ export function Header() {
   const { count, openCart } = useCart();
   const [menu, setMenu] = useState(false);
   const { pathname } = useLocation();
-  const { theme, toggle } = useTheme();
+  const { toggle } = useTheme();
 
   useEffect(() => setMenu(false), [pathname]);
 
@@ -49,11 +49,10 @@ export function Header() {
             type="button"
             onClick={toggle}
             className="link-line t-small font-medium"
-            aria-label={
-              theme === "dark" ? "Use the light theme" : "Use the dark theme"
-            }
+            aria-label="Switch between the light and the dark theme"
           >
-            {theme === "dark" ? "Light" : "Dark"}
+            <span className="theme-label theme-label--light">Dark</span>
+            <span className="theme-label theme-label--dark">Light</span>
           </button>
           <button
             type="button"

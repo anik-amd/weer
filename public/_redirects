@@ -1,1 +1,7 @@
-/*    /index.html   200
+# Every route is generated as a document at build time, so there is no
+# single-page-app fallback to rewrite to. The build writes:
+#
+#   index.html, shop/index.html, shop/<piece>/index.html, about/index.html,
+#   contact/index.html, checkout/index.html
+#
+# and 404.html, which the host serves with a 404 status for anything else.
