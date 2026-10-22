@@ -1,5 +1,14 @@
 import { PRODUCTS } from "./products";
 
+/** Where the site lives. Used for canonical links, social cards and the map. */
+export const SITE = {
+  url: "https://weer-studio.netlify.app",
+  name: "WEER",
+  locale: "en_GB",
+  /** The card a crawler and a chat show when a link is pasted. */
+  image: "/photos/rotterdam-harbour.jpg",
+};
+
 export const BRAND = {
   name: "WEER",
   meaning: "Dutch for again",

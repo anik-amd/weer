@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
 import App from "./App";
-import { PAGES } from "./data/site";
+import { PAGES, PHOTOS, SITE } from "./data/site";
 
 /**
  * Renders a route to HTML. The build runs this once per page and writes the
@@ -19,4 +19,4 @@ export function render(url: string): string {
   );
 }
 
-export { PAGES };
+export { PAGES, PHOTOS, SITE };

@@ -193,6 +193,48 @@ export function Garment({
     return out;
   }, [batch.join(","), distinct.size, kind]);
 
+  /**
+   * The marl, written compactly.
+   *
+   * Each fleck is a small pill, tilted. Written out as its own element it
+   * costs a hundred and thirty bytes of markup, and a page of garments came
+   * to hundreds of kilobytes of rects. Written as one path per colour, with
+   * the corners of every pill worked out here, the same drawing is a handful
+   * of elements and a fraction of the bytes. The seed is unchanged, so the
+   * fabric looks exactly as it did.
+   */
+  const marl = useMemo(() => {
+    const byColour = new Map<string, string[]>();
+    const round = (v: number) => Math.round(v * 10) / 10;
+
+    for (const f of flecks) {
+      const a = (f.r * Math.PI) / 180;
+      const cos = Math.cos(a);
+      const sin = Math.sin(a);
+      const hw = f.w / 2;
+      const hh = f.h / 2;
+      const corner = (dx: number, dy: number): [number, number] => [
+        f.x + dx * cos - dy * sin,
+        f.y + dx * sin + dy * cos,
+      ];
+      const [ax, ay] = corner(-hw, -hh);
+      const [bx, by] = corner(hw, -hh);
+      const [cx, cy] = corner(hw, hh);
+      const [dx, dy] = corner(-hw, hh);
+      const d =
+        `M${round(ax)} ${round(ay)}` +
+        `l${round(bx - ax)} ${round(by - ay)}` +
+        `l${round(cx - bx)} ${round(cy - by)}` +
+        `l${round(dx - cx)} ${round(dy - cy)}z`;
+
+      const parts = byColour.get(f.c);
+      if (parts) parts.push(d);
+      else byColour.set(f.c, [d]);
+    }
+
+    return [...byColour].map(([c, parts]) => ({ c, d: parts.join("") }));
+  }, [flecks]);
+
   const clipId = `clip-${uid}`;
   const isLong = kind === "raglan" || kind === "rugby";
 
@@ -305,19 +347,9 @@ export function Garment({
         )}
 
         {/* Marled flecks */}
-        <g clipPath={`url(#${clipId})`}>
-          {flecks.map((f, i) => (
-            <rect
-              key={i}
-              x={f.x}
-              y={f.y}
-              width={f.w}
-              height={f.h}
-              rx={f.h / 2}
-              fill={f.c}
-              opacity={0.6}
-              transform={`rotate(${f.r} ${f.x} ${f.y})`}
-            />
+        <g clipPath={`url(#${clipId})`} opacity={0.6}>
+          {marl.map((m, i) => (
+            <path key={i} d={m.d} fill={m.c} />
           ))}
         </g>
 
