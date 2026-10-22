@@ -5,8 +5,20 @@ export const SITE = {
   url: "https://weer-studio.netlify.app",
   name: "WEER",
   locale: "en_GB",
-  /** The card a crawler and a chat show when a link is pasted. */
-  image: "/photos/rotterdam-harbour.jpg",
+  /**
+   * The card a crawler and a chat show when a link is pasted. The mill
+   * engine is the machine the whole story hangs on, and it is the only
+   * image on the site that is already close to the 1.91:1 a card wants.
+   */
+  image: "/photos/mill-engine-poster.jpg",
+  imageWidth: 1920,
+  imageHeight: 1080,
+  imageAlt:
+    "A mill engine in operation at the Ellenroad Ring Mill in Greater Manchester.",
+  /** The house mark, as a file a crawler can fetch. */
+  logo: "/logo.svg",
+  /** Where the code and the design study live. */
+  repo: "https://github.com/anik-amd/weer",
 };
 
 export const BRAND = {
@@ -51,47 +63,48 @@ export const PAGES: Page[] = [
     file: "index.html",
     title: "WEER — t-shirts made from the ones you already own",
     description:
-      "WEER, a design study of a t-shirt shop: a Rotterdam studio that shreds reclaimed t-shirts into yarn and knits new ones. The brand, the products, the people and the numbers are invented, and the copy, art and code were written by AI.",
+      "A design study of a t-shirt shop: a Rotterdam studio that shreds reclaimed t-shirts into yarn and knits new ones. Invented brand, AI-written code.",
   },
   {
     path: "/shop",
     file: "shop.html",
-    title: "The collection — WEER",
+    title: "The collection — seven pieces from reclaimed shirts",
     description:
       "Seven pieces knitted from reclaimed t-shirts: the collection, the dye batches each one came from, and the world of reclaimed fibre they are made in.",
   },
   ...PRODUCTS.map<Page>((p) => ({
     path: `/shop/${p.id}`,
     file: `shop/${p.id}.html`,
-    title: `${p.name} — WEER`,
-    description: `${p.tagline} €${p.price}. ${p.description}`,
+    title: `${p.name} — ${p.fit.toLowerCase()}, ${p.gsm} gsm, from reclaimed shirts · WEER`,
+    description: `${p.name}. ${p.tagline} €${p.price}. Made from reclaimed cotton, in Portugal and the Netherlands.`,
   })),
   {
     path: "/about",
     file: "about.html",
-    title: "About us — WEER",
+    title: "About us — the studio that never buys new fibre · WEER",
     description:
       "The founder's letter, the history of a studio that never buys new fibre, the four things we refuse to do, and our own numbers.",
   },
   {
     path: "/contact",
     file: "contact.html",
-    title: "Contact — WEER",
+    title: "Contact — where to write, and how to find the studio · WEER",
     description:
       "Where to write, how to find the studio on Keileweg in Rotterdam, and the questions we are asked most.",
   },
   {
     path: "/checkout",
     file: "checkout.html",
-    title: "Your order — WEER",
+    title: "Your order — the bag, the address, and what happens next · WEER",
     description:
-      "The bag, the address, and what happens to an order after you place it.",
+      "The bag, the address, and what happens to an order after you place it: made in Portugal, shipped within two working days.",
   },
   {
     path: "/404",
     file: "404.html",
-    title: "Nothing here — WEER",
-    description: "This page was never knitted.",
+    title: "Nothing here — this page was never knitted · WEER",
+    description:
+      "This page was never knitted. The link you followed does not lead anywhere, but the collection does.",
   },
 ];
 
